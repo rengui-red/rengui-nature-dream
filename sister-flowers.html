@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>姐妹双花 | 仁归·自然之梦</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'><text y='32' font-size='30'>🌸</text></svg>">
+    <style>
+        :root {
+            --green-50: #f2f8f3;
+            --green-100: #e0efe4;
+            --green-500: #4a8c5c;
+            --green-600: #3d704a;
+            --green-700: #345c3e;
+            --warm-white: #fefdfb;
+            --text-primary: #2d3a2d;
+            --text-secondary: #5a6b5a;
+            --text-muted: #8a9a8a;
+            --shadow-md: 0 4px 16px rgba(45, 58, 45, 0.08);
+            --shadow-lg: 0 8px 32px rgba(45, 58, 45, 0.10);
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(175deg, #eaf5ec 0%, #f5f9f6 20%, #f8faf7 50%, #f0f7f2 80%, #eef6ef 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 背景浮动光斑 */
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.3;
+            filter: blur(70px);
+        }
+        .bg-orb--1 {
+            width: 260px; height: 260px;
+            background: radial-gradient(circle, rgba(156, 200, 167, 0.45) 0%, transparent 70%);
+            top: -6%; left: -4%;
+            animation: orbFloat 18s ease-in-out infinite;
+        }
+        .bg-orb--2 {
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, rgba(220, 200, 170, 0.35) 0%, transparent 70%);
+            bottom: -8%; right: -5%;
+            animation: orbFloat 22s ease-in-out infinite reverse;
+        }
+        @keyframes orbFloat {
+            0%,100% { transform: translate(0,0) scale(1); }
+            33% { transform: translate(35px,-20px) scale(1.1); }
+            66% { transform: translate(-20px,25px) scale(0.92); }
+        }
+
+        /* 主卡片 */
+        .main-card {
+            position: relative;
+            z-index: 1;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: var(--radius-xl);
+            padding: 50px 36px 40px;
+            max-width: 520px;
+            width: 100%;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(180, 200, 185, 0.3);
+            animation: fadeInUp 0.7s ease-out;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .back-row {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .back-link {
+            color: var(--green-600);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--green-500); }
+
+        .title-icon {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 8px;
+            animation: gentleSway 4s ease-in-out infinite;
+        }
+        @keyframes gentleSway {
+            0%,100% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            75% { transform: rotate(-5deg); }
+        }
+
+        .main-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--green-700);
+            margin-bottom: 8px;
+            letter-spacing: 0.05em;
+        }
+        .subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 36px;
+            line-height: 1.8;
+            letter-spacing: 0.04em;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .sister-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px 24px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+            text-decoration: none;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        .sister-btn--rain {
+            background: linear-gradient(135deg, #6a9fb5 0%, #4a7f95 100%);
+            box-shadow: 0 4px 16px rgba(74, 127, 149, 0.3);
+        }
+        .sister-btn--rain:hover {
+            box-shadow: 0 6px 24px rgba(74, 127, 149, 0.42);
+            transform: translateY(-3px);
+        }
+        .sister-btn--warm {
+            background: linear-gradient(135deg, #c48a7c 0%, #a0695a 100%);
+            box-shadow: 0 4px 16px rgba(160, 105, 90, 0.3);
+        }
+        .sister-btn--warm:hover {
+            box-shadow: 0 6px 24px rgba(160, 105, 90, 0.42);
+            transform: translateY(-3px);
+        }
+        .sister-btn:active {
+            transform: translateY(0) scale(0.97);
+        }
+        .sister-btn .btn-icon {
+            font-size: 1.5rem;
+        }
+
+        .footer-note {
+            margin-top: 32px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            letter-spacing: 0.03em;
+        }
+        .footer-note p {
+            margin: 2px 0;
+        }
+        .footer-divider {
+            width: 40px;
+            height: 2px;
+            background: rgba(180, 200, 185, 0.5);
+            margin: 12px auto;
+            border-radius: 2px;
+        }
+
+        /* 响应式 */
+        @media (max-width: 480px) {
+            .main-card {
+                padding: 36px 20px 30px;
+                border-radius: var(--radius-lg);
+            }
+            .main-title {
+                font-size: 1.5rem;
+            }
+            .sister-btn {
+                padding: 16px 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 背景浮动光斑 -->
+    <div class="bg-orb bg-orb--1" aria-hidden="true"></div>
+    <div class="bg-orb bg-orb--2" aria-hidden="true"></div>
+
+    <!-- 主卡片 -->
+    <div class="main-card">
+        <!-- 返回链接 -->
+        <div class="back-row">
+            <a href="index.html" class="back-link">← 返回主页</a>
+        </div>
+
+        <!-- 标题 -->
+        <span class="title-icon" aria-hidden="true">🌸🌧️</span>
+        <h1 class="main-title">仁归 · 姐妹双花</h1>
+        <p class="subtitle">
+            一雨润心，一欣暖怀<br>
+            虚实相伴，仁归同行
+        </p>
+
+        <!-- 两个入口按钮 -->
+        <div class="btn-group">
+            <a href="rain-heart.html" class="sister-btn sister-btn--rain">
+                <span class="btn-icon">🌧️</span> 雨点心 · 温柔倾诉
+            </a>
+            <a href="ai-companion.html" class="sister-btn sister-btn--warm">
+                <span class="btn-icon">🌸</span> 欣雨点 · 心悦相伴
+            </a>
+        </div>
+
+        <!-- 底部信息 -->
+        <div class="footer-divider"></div>
+        <div class="footer-note">
+            <p>🌿 仁归 · 自然之梦</p>
+            <p>关注身心压抑与精神抑郁人群 · 自我解放 · 修心养性</p>
+            <p>创意创建：南山居士 / 尘间盲克 · 技术协助：DBJSZ</p>
+        </div>
+    </div>
+
+</body>
+</html>

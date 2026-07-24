@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心理探索 | 仁归·自然之梦</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'><text y='32' font-size='30'>🧘</text></svg>">
+    <style>
+        :root {
+            --green-50:#f2f8f3; --green-100:#e0efe4; --green-200:#c2dfc9;
+            --green-500:#4a8c5c; --green-600:#3d704a; --green-700:#345c3e;
+            --text-primary:#2d3a2d; --text-secondary:#5a6b5a; --text-muted:#8a9a8a;
+            --shadow-sm:0 1px 3px rgba(45,58,45,0.06);
+            --shadow-md:0 4px 16px rgba(45,58,45,0.08);
+            --shadow-lg:0 8px 32px rgba(45,58,45,0.10);
+            --radius-lg:20px; --radius-xl:28px;
+        }
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{
+            font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+            background:linear-gradient(175deg,#eaf5ec,#f5f9f6,#f8faf7);
+            min-height:100vh;color:var(--text-primary);-webkit-font-smoothing:antialiased;
+        }
+        .bg-orb{
+            position:fixed;border-radius:50%;pointer-events:none;z-index:0;opacity:0.28;filter:blur(70px);
+        }
+        .bg-orb--1{
+            width:260px;height:260px;
+            background:radial-gradient(circle,rgba(139,175,145,0.4) 0%,transparent 70%);
+            top:-6%;left:-4%;animation:orbFloat 20s ease-in-out infinite;
+        }
+        @keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(30px,-20px) scale(1.1);}}
+        .nav-bar{
+            position:sticky;top:0;z-index:100;
+            background:rgba(254,253,251,0.85);backdrop-filter:blur(16px);
+            border-bottom:1px solid rgba(180,200,185,0.3);padding:0 20px;
+        }
+        .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px;}
+        .nav-brand{text-decoration:none;color:var(--green-700);font-weight:700;font-size:1.2rem;}
+        .nav-links{display:flex;gap:18px;list-style:none;}
+        .nav-links a{text-decoration:none;color:var(--text-secondary);font-size:0.9rem;transition:color 0.2s;}
+        .nav-links a:hover{color:var(--green-500);}
+
+        .main-wrap{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:40px 20px 50px;text-align:center;}
+        .main-wrap h1{font-size:2rem;color:var(--green-700);margin-bottom:10px;}
+        .main-wrap .sub{color:var(--text-secondary);margin-bottom:36px;}
+
+        .cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;}
+        .entry-card{
+            background:#fff;border-radius:var(--radius-lg);padding:28px 20px;
+            box-shadow:var(--shadow-sm);border:1px solid rgba(180,200,185,0.25);
+            text-decoration:none;color:inherit;transition:all 0.3s;display:block;
+        }
+        .entry-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px);border-color:var(--green-200);}
+        .entry-card .icon{font-size:2.2rem;display:block;margin-bottom:10px;}
+        .entry-card h3{font-size:1.05rem;color:var(--green-600);margin-bottom:6px;}
+        .entry-card p{font-size:0.85rem;color:var(--text-muted);}
+
+        .back-row{margin-top:36px;}
+        .btn{
+            display:inline-block;padding:10px 24px;background:#fff;color:var(--green-600);
+            border:2px solid var(--green-200);border-radius:28px;text-decoration:none;
+            font-weight:600;transition:all 0.3s;
+        }
+        .btn:hover{background:var(--green-50);border-color:var(--green-500);}
+        @media(max-width:500px){.cards-grid{grid-template-columns:1fr 1fr;gap:12px;}.entry-card{padding:20px 14px;}}
+    </style>
+</head>
+<body>
+    <div class="bg-orb bg-orb--1"></div>
+    <nav class="nav-bar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand">🌿 仁归 · 自然之梦
+</a>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="brand-home.html">品牌</a></li>
+                <li><a href="diary-index.html">日记</a></li>
+                <li><a href="relax-game.html">减压</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-wrap">
+        <h1>🧘 心理探索入口</h1>
+        <p class="sub">科学认知自我，理性关怀内心</p>
+        <div class="cards-grid">
+            <a href="sas-test.html" class="entry-card">
+                <span class="icon">📋</span>
+                <h3>SAS 焦虑自评</h3>
+                <p>标准焦虑量表，了解当前焦虑水平</p>
+            </a>
+            <a href="rain-heart.html" class="entry-card">
+                <span class="icon">🌧️</span>
+                <h3>雨点心倾听</h3>
+                <p>在雨声中安静倾诉，释放情绪</p>
+            </a>
+            <a href="ai-companion.html" class="entry-card">
+                <span class="icon">💬</span>
+                <h3>AI 情绪陪伴</h3>
+                <p>与温柔 AI 对话，获得共情支持</p>
+            </a>
+            <a href="diary-index.html" class="entry-card">
+                <span class="icon">📝</span>
+                <h3>心情日记</h3>
+                <p>记录心绪轨迹，看见自我成长</p>
+            </a>
+        </div>
+        <div class="back-row">
+            <a href="index.html" class="btn">← 返回首页</a>
+        </div>
+    </div>
+</body>
+</html>
+
+

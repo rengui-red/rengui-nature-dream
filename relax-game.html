@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>休闲减压 | 仁归·自然之梦</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'><text y='32' font-size='30'>🎐</text></svg>">
+    <style>
+        :root {
+            --green-dark: #4a7c59;
+            --green-mid: #6b9070;
+            --green-light: #8aab8e;
+            --green-pale: #b5ccb8;
+            --bg-warm: #f5f9f6;
+            --text-primary: #3d4f3f;
+            --text-secondary: #748c7a;
+            --text-muted: #9aada0;
+            --shadow-sm: 0 2px 12px rgba(74, 124, 89, 0.08);
+            --shadow-md: 0 6px 24px rgba(74, 124, 89, 0.12);
+            --shadow-lg: 0 12px 40px rgba(74, 124, 89, 0.18);
+            --radius-md: 16px;
+            --radius-lg: 20px;
+            --radius-full: 50%;
+            --transition-fast: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-breath: 4s cubic-bezier(0.45, 0, 0.55, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(175deg, #eaf5ec 0%, #f5f9f6 15%, #f8faf7 40%, #f0f7f2 70%, #eef6ef 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 导航栏 */
+        .nav-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(254, 253, 251, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(180, 200, 185, 0.3);
+            padding: 0 20px;
+        }
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 56px;
+        }
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--green-dark);
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 0.03em;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--green-dark); }
+
+        /* 背景光斑 */
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.3;
+            filter: blur(60px);
+        }
+        .bg-orb--1 {
+            width: 280px; height: 280px;
+            background: radial-gradient(circle, rgba(139,175,145,0.5) 0%, transparent 70%);
+            top: -8%; left: -6%;
+            animation: floatOrb 20s ease-in-out infinite;
+        }
+        .bg-orb--2 {
+            width: 220px; height: 220px;
+            background: radial-gradient(circle, rgba(180,200,170,0.45) 0%, transparent 70%);
+            bottom: -10%; right: -5%;
+            animation: floatOrb 24s ease-in-out infinite reverse;
+        }
+        @keyframes floatOrb {
+            0%,100% { transform: translate(0,0) scale(1); }
+            33% { transform: translate(45px,30px) scale(1.1); }
+            66% { transform: translate(-30px,-25px) scale(0.9); }
+        }
+
+        /* 主容器 */
+        .relax-wrap {
+            position: relative;
+            z-index: 1;
+            padding: 30px 20px 50px;
+            display: flex;
+            justify-content: center;
+        }
+        .relax-main {
+            width: 100%;
+            max-width: 720px;
+            background: rgba(255,255,255,0.82);
+            backdrop-filter: blur(18px);
+            border-radius: var(--radius-lg);
+            padding: 36px 30px 34px;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(180,200,185,0.3);
+        }
+
+        .relax-header h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--green-dark);
+            letter-spacing: 0.03em;
+            margin-bottom: 6px;
+        }
+        .relax-header .subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        /* 卡片 */
+        .card-item {
+            padding: 28px 24px;
+            margin: 22px auto;
+            max-width: 500px;
+            background: linear-gradient(135deg, #f9fcfa, #f5f9f6, #fafcfa);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(180,200,185,0.25);
+            transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+        .card-item:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        .card-item h4 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--green-dark);
+            margin-bottom: 6px;
+        }
+        .card-item .card-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+        }
+
+        /* 呼吸圆环 */
+        .circle-wrapper {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin: 20px auto 18px;
+        }
+        .circle {
+            width: 120px; height: 120px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 35%, #8aab8e, #6b9070 45%, #4a7c59);
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            box-shadow: 0 0 18px rgba(107,144,112,0.35), 0 0 40px rgba(107,144,112,0.2);
+            transition: box-shadow var(--transition-breath);
+            will-change: transform, box-shadow;
+            z-index: 2;
+        }
+        .circle.breathing {
+            animation: breathCycle 8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+        }
+        .circle.breathing-paused { animation-play-state: paused; }
+
+        @keyframes breathCycle {
+            0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 18px rgba(107,144,112,0.35); }
+            50% { transform: translate(-50%, -50%) scale(1.32); box-shadow: 0 0 30px rgba(107,144,112,0.5); }
+            100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 18px rgba(107,144,112,0.35); }
+        }
+
+        .circle-aura {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px; height: 120px;
+            border-radius: 50%;
+            border: 2px solid rgba(139,171,142,0.35);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .circle-aura.active {
+            animation: auraPulse 8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+        }
+        .circle-aura.paused { animation-play-state: paused; }
+        @keyframes auraPulse {
+            0% { width: 120px; height: 120px; opacity: 0.35; }
+            50% { width: 165px; height: 165px; opacity: 0.08; }
+            100% { width: 120px; height: 120px; opacity: 0.35; }
+        }
+
+        .tip-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--green-dark);
+            margin: 6px 0 4px;
+            min-height: 28px;
+            transition: color 0.3s;
+        }
+        .tip-text.inhale { color: #5a9a6a; }
+        .tip-text.exhale { color: #4a7c59; }
+
+        .breath-progress-wrap {
+            width: 200px; height: 5px;
+            background: rgba(180,200,185,0.3);
+            border-radius: 10px;
+            margin: 8px auto 0;
+            overflow: hidden;
+        }
+        .breath-progress-bar {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--green-light), var(--green-mid));
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+        .breath-progress-bar.active {
+            animation: progressCycle 8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+        }
+        .breath-progress-bar.paused { animation-play-state: paused; }
+        @keyframes progressCycle {
+            0% { width: 0%; }
+            50% { width: 100%; }
+            100% { width: 0%; }
+        }
+
+        .breath-count {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+            min-height: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            text-decoration: none;
+            color: #fff;
+            background: linear-gradient(135deg, var(--green-mid), var(--green-dark));
+            box-shadow: 0 4px 14px rgba(74,124,89,0.3);
+            margin: 5px;
+        }
+        .btn:hover {
+            box-shadow: 0 6px 22px rgba(74,124,89,0.42);
+            transform: translateY(-1px);
+        }
+        .btn:active { transform: translateY(1px) scale(0.97); }
+        .btn-light {
+            background: #fff;
+            color: var(--green-dark);
+            border: 2px solid rgba(139,171,142,0.45);
+            box-shadow: var(--shadow-sm);
+        }
+        .btn-light:hover {
+            background: #f5f9f6;
+            border-color: var(--green-mid);
+            box-shadow: var(--shadow-md);
+        }
+        .btn-stop {
+            background: linear-gradient(135deg, #c08a7c, #a0695a);
+            box-shadow: 0 4px 14px rgba(160,105,90,0.3);
+        }
+
+        #quietWords {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            padding: 8px 6px;
+            min-height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.4s, transform 0.4s;
+        }
+        #quietWords.fade-out { opacity: 0; transform: translateY(-8px); }
+        #quietWords.fade-in { opacity: 1; transform: translateY(0); }
+
+        .back-row {
+            margin-top: 36px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(180,200,185,0.25);
+        }
+
+        @media (max-width: 600px) {
+            .relax-main { padding: 24px 16px; }
+            .relax-header h2 { font-size: 1.4rem; }
+            .card-item { padding: 20px 16px; margin: 16px auto; }
+            .circle-wrapper { width: 130px; height: 130px; }
+            .circle { width: 100px; height: 100px; }
+            .circle-aura { width: 100px; height: 100px; }
+            @keyframes breathCycle-mobile {
+                0% { transform: translate(-50%, -50%) scale(1); }
+                50% { transform: translate(-50%, -50%) scale(1.28); }
+                100% { transform: translate(-50%, -50%) scale(1); }
+            }
+            @keyframes auraPulse-mobile {
+                0% { width: 100px; height: 100px; opacity: 0.3; }
+                50% { width: 135px; height: 135px; opacity: 0.06; }
+                100% { width: 100px; height: 100px; opacity: 0.3; }
+            }
+            .circle.breathing { animation-name: breathCycle-mobile; }
+            .circle-aura.active { animation-name: auraPulse-mobile; }
+            .nav-links { gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 背景光斑 -->
+    <div class="bg-orb bg-orb--1"></div>
+    <div class="bg-orb bg-orb--2"></div>
+
+    <!-- 导航栏 -->
+    <nav class="nav-bar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand">🌿 仁归 · 自然之梦
+</a>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="brand-home.html">品牌页</a></li>
+                <li><a href="ai-companion.html">AI陪伴</a></li>
+                <li><a href="diary-index.html">日记</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主内容 -->
+    <div class="relax-wrap">
+        <div class="relax-main">
+            <div class="relax-header">
+                <h2>轻量休闲 · 舒缓身心</h2>
+                <p class="subtitle">暂时放下杂念，放松紧绷情绪</p>
+            </div>
+
+            <!-- 呼吸练习卡片 -->
+            <div class="card-item">
+                <h4>静心呼吸练习</h4>
+                <p class="card-desc">跟随圆环节奏，平稳调节呼吸</p>
+                <div class="tip-text" id="breathTip">点击下方按钮开始</div>
+                <div class="circle-wrapper">
+                    <div class="circle-aura" id="circleAura"></div>
+                    <div class="circle" id="breathCircle"></div>
+                </div>
+                <div class="breath-progress-wrap">
+                    <div class="breath-progress-bar" id="breathProgress"></div>
+                </div>
+                <div class="breath-count" id="breathCount"></div>
+                <button class="btn" id="startBreath" aria-label="开始静心呼吸练习">开始静心练习</button>
+            </div>
+
+            <!-- 静心短句卡片 -->
+            <div class="card-item">
+                <h4>静心短句寄语</h4>
+                <p id="quietWords" class="fade-in"></p>
+                <button class="btn btn-light" onclick="changeWords()" aria-label="更换暖心寄语">✨ 更换暖心寄语</button>
+            </div>
+
+            <!-- 底部返回 -->
+            <div class="back-row">
+                <a href="index.html" class="btn btn-light">🏠 返回首页</a>
+                <a href="brand-home.html" class="btn btn-light">🌐 品牌首页</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const breathCircle = document.getElementById('breathCircle');
+            const circleAura = document.getElementById('circleAura');
+            const breathProgress = document.getElementById('breathProgress');
+            const btnBreath = document.getElementById('startBreath');
+            const breathTip = document.getElementById('breathTip');
+            const breathCount = document.getElementById('breathCount');
+            const quietWords = document.getElementById('quietWords');
+
+            let isRunning = false;
+            let cycleCount = 0;
+            let phase = 'inhale';
+            let cycleTimer = null;
+
+            const wordsList = [
+                '慢慢来，一切都会慢慢变好，你已经很努力了。',
+                '允许一切发生，也允许自己偶尔脆弱与停歇。',
+                '不必事事圆满，安稳自在便是最好的生活。',
+                '把烦恼慢慢放下，让心回归平静与柔软。',
+                '好好善待自己，你值得世间所有温柔。',
+                '深呼吸，这一刻只属于你自己，无需讨好世界。',
+                '像树一样扎根当下，不焦虑未来，不纠结过往。',
+                '你不需要完美，你只需要真实地做自己。',
+                '风吹过林间，也吹散你心头的微尘。',
+                '此刻的宁静，是送给自己最珍贵的礼物。',
+                '生命自有其节奏，不必追赶，也不必慌张。',
+                '闭上眼睛，想象自己是一片轻盈的云。',
+                '每一次呼气，都把疲惫轻轻放下。',
+                '今天的你已经足够勇敢，好好休息吧。',
+                '安静中蕴藏着力量，温柔中生长着韧性。'
+            ];
+            let lastQuoteIndex = -1;
+
+            window.changeWords = function() {
+                if (!quietWords) return;
+                let r;
+                do {
+                    r = Math.floor(Math.random() * wordsList.length);
+                } while (r === lastQuoteIndex && wordsList.length > 1);
+                lastQuoteIndex = r;
+                quietWords.classList.remove('fade-in');
+                quietWords.classList.add('fade-out');
+                setTimeout(() => {
+                    quietWords.innerText = wordsList[r];
+                    quietWords.classList.remove('fade-out');
+                    quietWords.classList.add('fade-in');
+                }, 380);
+            };
+
+            function updateBreathTip(newPhase) {
+                if (!breathTip) return;
+                phase = newPhase;
+                if (phase === 'inhale') {
+                    breathTip.innerText = '🌬 缓缓吸气';
+                    breathTip.classList.add('inhale');
+                    breathTip.classList.remove('exhale');
+                } else {
+                    breathTip.innerText = '💨 慢慢呼气';
+                    breathTip.classList.add('exhale');
+                    breathTip.classList.remove('inhale');
+                }
+            }
+
+            function startBreathExercise() {
+                isRunning = true;
+                cycleCount = 0;
+                phase = 'inhale';
+                btnBreath.innerText = '⏹ 停止练习';
+                btnBreath.classList.add('btn-stop');
+                if (breathCount) {
+                    breathCount.innerText = '已完成 0 轮呼吸';
+                    breathCount.style.opacity = '1';
+                }
+                breathCircle.classList.add('breathing');
+                breathCircle.classList.remove('breathing-paused');
+                if (circleAura) {
+                    circleAura.classList.add('active');
+                    circleAura.classList.remove('paused');
+                }
+                if (breathProgress) {
+                    breathProgress.classList.add('active');
+                    breathProgress.classList.remove('paused');
+                }
+                updateBreathTip('inhale');
+
+                cycleTimer = setInterval(() => {
+                    if (phase === 'inhale') {
+                        updateBreathTip('exhale');
+                    } else {
+                        updateBreathTip('inhale');
+                        cycleCount++;
+                        if (breathCount) {
+                            breathCount.innerText = '已完成 ' + cycleCount + ' 轮呼吸';
+                        }
+                    }
+                }, 4000);
+            }
+
+            function stopBreathExercise() {
+                isRunning = false;
+                if (cycleTimer) { clearInterval(cycleTimer); cycleTimer = null; }
+                breathCircle.classList.add('breathing-paused');
+                if (circleAura) circleAura.classList.add('paused');
+                if (breathProgress) breathProgress.classList.add('paused');
+                btnBreath.innerText = '开始静心练习';
+                btnBreath.classList.remove('btn-stop');
+                if (breathTip) {
+                    breathTip.innerText = '已暂停练习';
+                    breathTip.classList.remove('inhale', 'exhale');
+                }
+                if (breathCount) {
+                    breathCount.innerText = '共完成 ' + cycleCount + ' 轮呼吸 · 已暂停';
+                }
+            }
+
+            function resetBreathExercise() {
+                stopBreathExercise();
+                cycleCount = 0;
+                phase = 'inhale';
+                breathCircle.classList.remove('breathing', 'breathing-paused');
+                if (circleAura) circleAura.classList.remove('active', 'paused');
+                if (breathProgress) {
+                    breathProgress.classList.remove('active', 'paused');
+                    breathProgress.style.width = '0%';
+                }
+                if (breathTip) {
+                    breathTip.innerText = '点击下方按钮开始';
+                    breathTip.classList.remove('inhale', 'exhale');
+                }
+                if (breathCount) {
+                    breathCount.innerText = '';
+                    breathCount.style.opacity = '0';
+                }
+                btnBreath.innerText = '开始静心练习';
+                btnBreath.classList.remove('btn-stop');
+            }
+
+            btnBreath.addEventListener('click', () => {
+                if (isRunning) {
+                    resetBreathExercise();
+                } else {
+                    startBreathExercise();
+                }
+            });
+
+            function initPage() {
+                let r = Math.floor(Math.random() * wordsList.length);
+                lastQuoteIndex = r;
+                if (quietWords) {
+                    quietWords.innerText = wordsList[r];
+                    quietWords.classList.add('fade-in');
+                }
+                if (breathCount) breathCount.style.opacity = '0';
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initPage);
+            } else {
+                initPage();
+            }
+
+            window.addEventListener('beforeunload', () => {
+                if (cycleTimer) clearInterval(cycleTimer);
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.code === 'Space' && e.target === document.body) {
+                    e.preventDefault();
+                    btnBreath.click();
+                }
+                if (e.code === 'ArrowRight' && e.target === document.body) {
+                    e.preventDefault();
+                    window.changeWords();
+                }
+            });
+
+            console.log('🌿 休闲减压页面已就绪 | 空格键控制呼吸，右箭头换短句');
+        })();
+    </script>
+</body>
+</html>
+
+

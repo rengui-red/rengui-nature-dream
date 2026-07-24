@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>页面未找到 | 仁归·自然之梦</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'><text y='32' font-size='30'>🍃</text></svg>">
+    <style>
+        :root {
+            --green-50: #f2f8f3;
+            --green-100: #e0efe4;
+            --green-200: #c2dfc9;
+            --green-500: #4a8c5c;
+            --green-600: #3d704a;
+            --green-700: #345c3e;
+            --warm-white: #fefdfb;
+            --text-primary: #2d3a2d;
+            --text-secondary: #5a6b5a;
+            --shadow-lg: 0 8px 32px rgba(45,58,45,0.10);
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family: 'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+            background: linear-gradient(175deg, #eaf5ec, #f5f9f6, #f8faf7);
+            background-attachment: fixed;
+            min-height:100vh;
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 导航栏 - 与其他页面完全统一 */
+        .nav-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(254,253,251,0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(180,200,185,0.3);
+            padding: 0 20px;
+        }
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 56px;
+        }
+        .nav-brand {
+            text-decoration: none;
+            color: var(--green-700);
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 0.03em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover {
+            color: var(--green-500);
+        }
+
+        /* 主体内容区 */
+        .main-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 56px);
+            padding: 30px 20px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: var(--radius-xl);
+            padding: 50px 36px;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(180,200,185,0.3);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity:0; transform: translateY(20px); }
+            to { opacity:1; transform: translateY(0); }
+        }
+
+        .icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+            display: block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--green-700);
+            margin-bottom: 12px;
+            line-height: 1.5;
+            letter-spacing: 0.04em;
+        }
+
+        p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 28px;
+            font-size: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 28px;
+            background: linear-gradient(135deg, var(--green-500), var(--green-600));
+            color: #fff;
+            border-radius: 28px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 14px rgba(74,140,92,0.3);
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+        .btn:hover {
+            box-shadow: 0 6px 22px rgba(74,140,92,0.42);
+            transform: translateY(-2px);
+        }
+
+        /* 响应式 */
+        @media (max-width: 500px) {
+            .card {
+                padding: 36px 20px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .nav-links {
+                gap: 12px;
+            }
+            .nav-links a {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 统一导航栏 -->
+    <nav class="nav-bar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand">🌿 仁归 · 自然之梦
+</a>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="brand-home.html">品牌</a></li>
+                <li><a href="ai-companion.html">AI陪伴</a></li>
+                <li><a href="diary-index.html">日记</a></li>
+                <li><a href="sas-test.html">测评</a></li>
+                <li><a href="relax-game.html">减压</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主体内容 -->
+    <div class="main-content">
+        <div class="card">
+            <span class="icon">🍃</span>
+            <h1>这里什么都没有<br>但有寂静与安宁，自然祥和。</h1>
+            <p>风吹叶落，飘到了一个安静的角落。<br>别担心，回家的路，就在脚下。</p>
+            <a href="index.html" class="btn">🌿 回到首页</a>
+        </div>
+    </div>
+
+</body>
+</html>
+

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>欣雨点 · 暖心相伴 | 仁归·自然之梦</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'><text y='32' font-size='30'>🌸</text></svg>">
+    <style>
+        :root {
+            --warm-50: #fdf7f4;
+            --warm-100: #fae9e2;
+            --warm-200: #f4d2c4;
+            --warm-400: #d99e8a;
+            --warm-500: #c4816a;
+            --warm-600: #a86952;
+            --warm-700: #8a5240;
+            --warm-white: #fefdfb;
+            --text-primary: #2d3a2d;
+            --text-secondary: #5a6b5a;
+            --text-muted: #8a9a8a;
+            --shadow-sm: 0 1px 3px rgba(45, 58, 45, 0.06);
+            --shadow-md: 0 4px 16px rgba(45, 58, 45, 0.08);
+            --shadow-lg: 0 8px 32px rgba(45, 58, 45, 0.10);
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+            background: linear-gradient(175deg, #fdf7f4 0%, #fef9f7 20%, #fefdfb 50%, #fdf6f2 80%, #fcf3ee 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* 背景浮动光斑 */
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.30;
+            filter: blur(75px);
+            will-change: transform;
+        }
+        .bg-orb--1 {
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, rgba(220, 175, 155, 0.42) 0%, transparent 70%);
+            top: -8%;
+            left: -5%;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+        .bg-orb--2 {
+            width: 240px;
+            height: 240px;
+            background: radial-gradient(circle, rgba(235, 200, 180, 0.38) 0%, transparent 70%);
+            bottom: -10%;
+            right: -6%;
+            animation: orbFloat 24s ease-in-out infinite reverse;
+        }
+        .bg-orb--3 {
+            width: 170px;
+            height: 170px;
+            background: radial-gradient(circle, rgba(210, 160, 140, 0.32) 0%, transparent 70%);
+            top: 55%;
+            left: 60%;
+            animation: orbFloat 22s ease-in-out infinite;
+        }
+        @keyframes orbFloat {
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(40px, -25px) scale(1.12);
+            }
+            66% {
+                transform: translate(-25px, 30px) scale(0.9);
+            }
+        }
+
+        /* 花瓣装饰 */
+        .petal {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.3;
+            font-size: 1.3rem;
+            animation: petalFall linear infinite;
+        }
+        .petal--1 {
+            top: -30px;
+            left: 10%;
+            animation-duration: 7s;
+            animation-delay: 0s;
+        }
+        .petal--2 {
+            top: -30px;
+            left: 35%;
+            animation-duration: 8.5s;
+            animation-delay: 2s;
+        }
+        .petal--3 {
+            top: -30px;
+            left: 60%;
+            animation-duration: 7.5s;
+            animation-delay: 4s;
+        }
+        .petal--4 {
+            top: -30px;
+            left: 80%;
+            animation-duration: 9s;
+            animation-delay: 1s;
+        }
+        .petal--5 {
+            top: -30px;
+            left: 22%;
+            animation-duration: 8s;
+            animation-delay: 5s;
+        }
+        @keyframes petalFall {
+            0% {
+                transform: translateY(-40px) rotate(0deg) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.35;
+            }
+            50% {
+                transform: translateY(50vh) rotate(180deg) translateX(40px);
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg) translateX(-20px);
+                opacity: 0;
+            }
+        }
+
+        /* 主卡片 */
+        .main-card {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.84);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: var(--radius-xl);
+            padding: 48px 36px 40px;
+            max-width: 520px;
+            width: 100%;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(210, 180, 165, 0.3);
+            animation: fadeInUp 0.7s ease-out;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .back-row {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .back-link {
+            color: var(--warm-600);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            letter-spacing: 0.03em;
+        }
+        .back-link:hover {
+            color: var(--warm-500);
+        }
+
+        .title-icon {
+            font-size: 3.2rem;
+            display: block;
+            margin-bottom: 10px;
+            animation: gentleBloom 4s ease-in-out infinite;
+        }
+        @keyframes gentleBloom {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.12);
+            }
+        }
+
+        .main-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--warm-700);
+            margin-bottom: 8px;
+            letter-spacing: 0.05em;
+        }
+        .subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            line-height: 1.9;
+            letter-spacing: 0.04em;
+            max-width: 320px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .enter-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 18px 36px;
+            background: linear-gradient(135deg, var(--warm-500) 0%, var(--warm-600) 100%);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+            box-shadow: 0 4px 16px rgba(168, 105, 82, 0.32);
+            text-decoration: none;
+        }
+        .enter-btn:hover {
+            box-shadow: 0 6px 24px rgba(168, 105, 82, 0.45);
+            transform: translateY(-3px);
+            background: linear-gradient(135deg, #d08f78 0%, #b5755d 100%);
+        }
+        .enter-btn:active {
+            transform: translateY(0) scale(0.97);
+            transition: all 0.1s ease;
+        }
+        .enter-btn .btn-icon {
+            font-size: 1.3rem;
+        }
+
+        .footer-note {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.9;
+            letter-spacing: 0.03em;
+        }
+        .footer-note p {
+            margin: 3px 0;
+        }
+        .footer-divider {
+            width: 40px;
+            height: 2px;
+            background: rgba(210, 180, 165, 0.5);
+            margin: 16px auto 0;
+            border-radius: 2px;
+        }
+
+        /* 响应式 */
+        @media (max-width: 480px) {
+            .main-card {
+                padding: 36px 20px 30px;
+                border-radius: var(--radius-lg);
+            }
+            .main-title {
+                font-size: 1.5rem;
+            }
+            .subtitle {
+                font-size: 0.9rem;
+            }
+            .enter-btn {
+                padding: 16px 28px;
+                font-size: 1rem;
+                width: 100%;
+                max-width: 280px;
+            }
+            .petal {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 背景浮动光斑 -->
+    <div class="bg-orb bg-orb--1" aria-hidden="true"></div>
+    <div class="bg-orb bg-orb--2" aria-hidden="true"></div>
+    <div class="bg-orb bg-orb--3" aria-hidden="true"></div>
+
+    <!-- 花瓣装饰 -->
+    <span class="petal petal--1" aria-hidden="true">🌸</span>
+    <span class="petal petal--2" aria-hidden="true">💮</span>
+    <span class="petal petal--3" aria-hidden="true">🌸</span>
+    <span class="petal petal--4" aria-hidden="true">🌷</span>
+    <span class="petal petal--5" aria-hidden="true">💮</span>
+
+    <!-- 主卡片 -->
+    <div class="main-card">
+        <!-- 返回 -->
+        <div class="back-row">
+            <a href="sister-flowers.html" class="back-link">← 返回姐妹双花</a>
+        </div>
+
+        <!-- 图标与标题 -->
+        <span class="title-icon" aria-hidden="true">🌸</span>
+        <h1 class="main-title">欣雨点 · 暖心相伴</h1>
+        <p class="subtitle">
+            心悦如水，清宁自来。<br>
+            暖意相伴，仁归同行。
+        </p>
+
+        <!-- 入口按钮 -->
+        <a href="ai-companion.html" class="enter-btn">
+            <span class="btn-icon">🌸</span> 进入欣雨点 · 开始对话
+        </a>
+
+        <!-- 底部 -->
+        <div class="footer-divider"></div>
+        <div class="footer-note">
+            <p>🌿 仁归 · 自然之梦</p>
+            <p>关注身心压抑与精神抑郁人群 · 自我解放 · 修心养性</p>
+            <p>创意创建：南山居士 / 尘间盲克 · 技术协助：DBJSZ</p>
+        </div>
+    </div>
+
+</body>
+</html>

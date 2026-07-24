@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAS 焦虑自评 | 仁归·自然之梦</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'><text y='32' font-size='30'>📋</text></svg>">
+    <style>
+        :root {
+            --green-50: #f2f8f3;
+            --green-100: #e0efe4;
+            --green-200: #c2dfc9;
+            --green-400: #6fad80;
+            --green-500: #4a8c5c;
+            --green-600: #3d704a;
+            --green-700: #345c3e;
+            --warm-white: #fefdfb;
+            --text-primary: #2d3a2d;
+            --text-secondary: #5a6b5a;
+            --text-muted: #8a9a8a;
+            --shadow-sm: 0 1px 3px rgba(45,58,45,0.06);
+            --shadow-md: 0 4px 16px rgba(45,58,45,0.08);
+            --shadow-lg: 0 8px 32px rgba(45,58,45,0.10);
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+            background: linear-gradient(175deg, #eaf5ec 0%, #f5f9f6 20%, #f8faf7 50%, #f0f7f2 80%);
+            background-attachment: fixed;
+            min-height:100vh; color:var(--text-primary);
+            -webkit-font-smoothing:antialiased;
+            display:flex; flex-direction:column;
+        }
+        /* 背景光斑 */
+        .bg-orb {
+            position:fixed; border-radius:50%; pointer-events:none; z-index:0; opacity:0.25; filter:blur(70px);
+        }
+        .bg-orb--1 {
+            width:260px; height:260px;
+            background:radial-gradient(circle, rgba(139,175,145,0.4) 0%, transparent 70%);
+            top:-6%; left:-4%;
+            animation:orbFloat 22s ease-in-out infinite;
+        }
+        @keyframes orbFloat {
+            0%,100%{transform:translate(0,0) scale(1);}
+            50%{transform:translate(30px,-20px) scale(1.08);}
+        }
+        /* 导航栏 */
+        .nav-bar {
+            position:sticky; top:0; z-index:100;
+            background:rgba(254,253,251,0.85); backdrop-filter:blur(16px);
+            border-bottom:1px solid rgba(180,200,185,0.3); padding:0 20px;
+        }
+        .nav-inner {
+            max-width:1100px; margin:0 auto;
+            display:flex; align-items:center; justify-content:space-between; height:56px;
+        }
+        .nav-brand { text-decoration:none; color:var(--green-700); font-weight:700; font-size:1.2rem; }
+        .nav-links { display:flex; gap:18px; list-style:none; }
+        .nav-links a { text-decoration:none; color:var(--text-secondary); font-size:0.9rem; transition:color 0.2s; }
+        .nav-links a:hover { color:var(--green-500); }
+
+        /* 主容器 */
+        .main-wrap {
+            flex:1; display:flex; align-items:center; justify-content:center;
+            padding:30px 20px; position:relative; z-index:1;
+        }
+        .card {
+            background:rgba(255,255,255,0.85); backdrop-filter:blur(14px);
+            border-radius:var(--radius-xl); padding:36px 30px; width:100%; max-width:560px;
+            box-shadow:var(--shadow-lg); border:1px solid rgba(180,200,185,0.3);
+            text-align:center; transition:all 0.3s;
+        }
+        /* 进度条 */
+        .progress-wrap {
+            margin-bottom:20px; display:flex; align-items:center; gap:12px;
+        }
+        .progress-bar {
+            flex:1; height:6px; background:var(--green-100); border-radius:6px; overflow:hidden;
+        }
+        .progress-fill {
+            height:100%; background:linear-gradient(90deg, var(--green-400), var(--green-500));
+            border-radius:6px; transition:width 0.4s ease;
+        }
+        .progress-text {
+            font-size:0.85rem; color:var(--text-muted); white-space:nowrap;
+        }
+        /* 题目区 */
+        .question-stage { display:none; }
+        .question-stage.active { display:block; }
+        .greeting {
+            font-size:1.6rem; color:var(--green-600); margin-bottom:16px; font-weight:600;
+        }
+        .question-text {
+            font-size:1.2rem; color:var(--text-primary); margin:20px 0 24px; line-height:1.6;
+            min-height:60px; display:flex; align-items:center; justify-content:center;
+        }
+        .options-list {
+            display:flex; flex-direction:column; gap:10px; margin-bottom:20px;
+        }
+        .option-btn {
+            display:flex; align-items:center; gap:10px;
+            padding:14px 18px; background:var(--warm-white);
+            border:2px solid rgba(180,200,185,0.35); border-radius:var(--radius-md);
+            cursor:pointer; transition:all 0.2s; text-align:left;
+            font-size:0.95rem; color:var(--text-primary);
+        }
+        .option-btn:hover {
+            border-color:var(--green-400); background:var(--green-50);
+            transform:translateX(4px);
+        }
+        .option-btn.selected {
+            border-color:var(--green-500); background:var(--green-100);
+            box-shadow:0 0 0 3px rgba(74,140,92,0.15);
+        }
+        .option-emoji { font-size:1.3rem; width:30px; text-align:center; }
+        /* 导航按钮 */
+        .nav-btns {
+            display:flex; gap:10px; justify-content:center; margin-top:10px;
+        }
+        .btn {
+            display:inline-flex; align-items:center; gap:6px;
+            padding:12px 24px; font-size:0.95rem; font-weight:600;
+            border-radius:28px; cursor:pointer; transition:all 0.3s; border:none;
+            font-family:inherit;
+        }
+        .btn-primary {
+            background:linear-gradient(135deg, var(--green-500), var(--green-600));
+            color:#fff; box-shadow:0 4px 14px rgba(74,140,92,0.3);
+        }
+        .btn-primary:hover { box-shadow:0 6px 22px rgba(74,140,92,0.42); transform:translateY(-2px); }
+        .btn-primary:disabled { opacity:0.5; cursor:not-allowed; transform:none; box-shadow:none; }
+        .btn-outline {
+            background:#fff; color:var(--green-600);
+            border:2px solid var(--green-200); box-shadow:var(--shadow-sm);
+        }
+        .btn-outline:hover { border-color:var(--green-500); box-shadow:var(--shadow-md); }
+        /* 结果卡片 */
+        .result-box { display:none; }
+        .result-box.active { display:block; }
+        .result-score { font-size:2.2rem; font-weight:700; color:var(--green-600); margin:10px 0; }
+        .result-level { font-size:1.1rem; font-weight:600; margin:6px 0; }
+        .result-suggestion {
+            color:var(--text-secondary); margin:16px 0; line-height:1.7;
+            background:var(--green-50); padding:14px; border-radius:var(--radius-md);
+        }
+        .back-row { margin-top:20px; }
+        @media (max-width:500px) {
+            .card { padding:24px 16px; }
+            .question-text { font-size:1.05rem; }
+            .option-btn { padding:12px; font-size:0.9rem; }
+            .nav-links { gap:8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-orb bg-orb--1"></div>
+    <nav class="nav-bar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand">🌿 仁归 · 自然之梦
+</a>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="brand-home.html">品牌</a></li>
+                <li><a href="mental-entry.html">心理入口</a></li>
+                <li><a href="diary-index.html">日记</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-wrap">
+        <div class="card" id="appCard">
+            <!-- 欢迎界面 -->
+            <div class="question-stage active" id="welcomeStage">
+                <div class="greeting">🍃 焦虑自评 · 温柔对话</div>
+                <p style="color:var(--text-secondary); margin-bottom:20px;">
+                    接下来我会陪你一起感受最近一周的情绪状态。<br>没有对错，没有评判，只需选择最贴近你的那个答案。
+                </p>
+                <p style="color:var(--text-muted); font-size:0.9rem;">共20个小问题，大约需要3分钟</p>
+                <button class="btn btn-primary" onclick="startTest()" style="margin-top:16px;">🌸 开始轻柔自评</button>
+            </div>
+
+            <!-- 答题界面 -->
+            <div class="question-stage" id="questionStage">
+                <div class="progress-wrap">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width:0%;"></div>
+                    </div>
+                    <span class="progress-text" id="progressLabel">1/20</span>
+                </div>
+                <div class="question-text" id="questionDisplay"></div>
+                <div class="options-list" id="optionsContainer"></div>
+                <div class="nav-btns">
+                    <button class="btn btn-outline" id="prevBtn" disabled onclick="prevQuestion()">← 上一题</button>
+                    <button class="btn btn-primary" id="nextBtn" disabled onclick="nextQuestion()">下一题 →</button>
+                </div>
+                <p style="color:var(--text-muted); font-size:0.8rem; margin-top:10px;">点击选项即可选中，再点“下一题”继续</p>
+            </div>
+
+            <!-- 结果界面 -->
+            <div class="result-box" id="resultStage">
+                <div class="greeting">🌿 测评完成</div>
+                <p style="color:var(--text-secondary);">你的 SAS 标准分</p>
+                <div class="result-score" id="stdScore">--</div>
+                <div class="result-level" id="levelText"></div>
+                <div class="result-suggestion" id="suggestionText"></div>
+                <button class="btn btn-primary" onclick="resetTest()">🔄 重新测评</button>
+                <div class="back-row">
+                    <a href="mental-entry.html" class="btn-outline" style="display:inline-flex; align-items:center; gap:6px; padding:10px 20px; border-radius:28px; text-decoration:none;">← 返回心理入口</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // SAS 20题
+        const questions = [
+            "我觉得比平常容易紧张和着急",
+            "我无缘无故地感到害怕",
+            "我容易心里烦乱或觉得惊恐",
+            "我觉得我可能将要发疯",
+            "我觉得一切都很好，也不会发生什么不幸",
+            "我手脚发抖打颤",
+            "我因为头痛、颈痛和背痛而苦恼",
+            "我感觉容易衰弱和疲乏",
+            "我觉得心平气和，并且容易安静坐着",
+            "我觉得心跳得很快",
+            "我因为一阵阵头晕而苦恼",
+            "我有晕倒发作，或觉得要晕倒似的",
+            "我吸气呼气都感到很容易",
+            "我的手脚麻木和刺痛",
+            "我因为胃痛和消化不良而苦恼",
+            "我常常要小便",
+            "我的手脚常常是干燥温暖的",
+            "我脸红发热",
+            "我容易入睡并且一夜睡得很好",
+            "我做恶梦"
+        ];
+        // 反向计分题索引 (题目编号-1)
+        const reverseIndexes = new Set([4,8,12,16,18]);
+        // 选项
+        const options = [
+            { value:1, emoji:'😌', text:'没有或很少时间' },
+            { value:2, emoji:'🤔', text:'小部分时间' },
+            { value:3, emoji:'😟', text:'相当多时间' },
+            { value:4, emoji:'😣', text:'绝大部分或全部时间' }
+        ];
+
+        let currentIndex = 0;
+        let answers = new Array(questions.length).fill(null); // 存储原始分值(1-4)
+
+        const welcomeStage = document.getElementById('welcomeStage');
+        const questionStage = document.getElementById('questionStage');
+        const resultStage = document.getElementById('resultStage');
+        const questionDisplay = document.getElementById('questionDisplay');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const progressFill = document.getElementById('progressFill');
+        const progressLabel = document.getElementById('progressLabel');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        function showStage(stage) {
+            welcomeStage.classList.remove('active');
+            questionStage.classList.remove('active');
+            resultStage.classList.remove('active');
+            stage.classList.add('active');
+        }
+
+        function startTest() {
+            currentIndex = 0;
+            answers = new Array(questions.length).fill(null);
+            showStage(questionStage);
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const q = questions[currentIndex];
+            questionDisplay.textContent = `${currentIndex+1}. ${q}`;
+            // 渲染选项
+            optionsContainer.innerHTML = '';
+            options.forEach((opt, idx) => {
+                const btn = document.createElement('div');
+                btn.className = 'option-btn';
+                if (answers[currentIndex] === opt.value) {
+                    btn.classList.add('selected');
+                }
+                btn.innerHTML = `<span class="option-emoji">${opt.emoji}</span> ${opt.text}`;
+                btn.addEventListener('click', () => selectOption(opt.value, btn));
+                optionsContainer.appendChild(btn);
+            });
+
+            // 更新进度条
+            const progress = ((currentIndex) / questions.length) * 100;
+            progressFill.style.width = progress + '%';
+            progressLabel.textContent = `${currentIndex+1}/${questions.length}`;
+
+            // 按钮状态
+            prevBtn.disabled = (currentIndex === 0);
+            const answered = answers[currentIndex] !== null;
+            nextBtn.disabled = !answered;
+            if (currentIndex === questions.length - 1 && answered) {
+                nextBtn.textContent = '✨ 完成测评';
+            } else {
+                nextBtn.textContent = '下一题 →';
+            }
+        }
+
+        function selectOption(value, element) {
+            // 移除其他选中样式
+            optionsContainer.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+            element.classList.add('selected');
+            answers[currentIndex] = value;
+            nextBtn.disabled = false;
+            if (currentIndex === questions.length - 1) {
+                nextBtn.textContent = '✨ 完成测评';
+            }
+        }
+
+        function nextQuestion() {
+            if (answers[currentIndex] === null) return;
+            if (currentIndex < questions.length - 1) {
+                currentIndex++;
+                renderQuestion();
+            } else {
+                // 完成测评
+                showResult();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderQuestion();
+            }
+        }
+
+        function calculateScores() {
+            let rawScore = 0;
+            answers.forEach((ans, idx) => {
+                if (ans === null) return;
+                let score = ans;
+                if (reverseIndexes.has(idx)) {
+                    score = 5 - ans; // 反向计分
+                }
+                rawScore += score;
+            });
+            const standardScore = Math.round(rawScore * 1.25);
+            let level = '', suggestion = '';
+            if (standardScore < 50) {
+                level = '🌱 无焦虑症状';
+                suggestion = '你目前的情绪状态较为平稳，像春天的微风。继续保持这份宁静，好好照顾自己。';
+            } else if (standardScore < 60) {
+                level = '🍂 轻度焦虑';
+                suggestion = '你可能正经历一些轻微的不安，这是心灵在提醒你需要休息。试着做几个深呼吸，或者去散散步，和信任的人聊聊天。';
+            } else if (standardScore < 70) {
+                level = '🌧️ 中度焦虑';
+                suggestion = '你的焦虑感有些明显了，它可能影响了你的日常生活。不必独自承受，试试正念冥想、规律运动，或者预约一次心理咨询，都是温柔的出路。';
+            } else {
+                level = '⛈️ 重度焦虑';
+                suggestion = '我能感受到你心里正在经历一场风暴。请记住，寻求专业帮助是勇敢的表现，而不是软弱。联系心理医生或拨打心理援助热线，让温暖的手拉你一把。';
+            }
+            return { rawScore, standardScore, level, suggestion };
+        }
+
+        function showResult() {
+            const result = calculateScores();
+            document.getElementById('stdScore').textContent = result.standardScore;
+            document.getElementById('levelText').textContent = result.level;
+            document.getElementById('suggestionText').textContent = result.suggestion;
+            showStage(resultStage);
+            // 尝试保存到后端
+            saveAssessment(result);
+        }
+
+        async function saveAssessment(result) {
+            try {
+                const answerData = answers.map((val, idx) => ({
+                    question: idx+1,
+                    value: val
+                }));
+                await fetch('/api/assessment', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        test_type: 'SAS',
+                        total_score: result.standardScore,
+                        result_level: result.level,
+                        answers: answerData
+                    })
+                });
+            } catch (e) {
+                console.log('离线模式：测评结果仅本地显示');
+            }
+        }
+
+        function resetTest() {
+            answers = new Array(questions.length).fill(null);
+            currentIndex = 0;
+            showStage(welcomeStage);
+        }
+
+        // 键盘快捷键：左右箭头切换题目
+        document.addEventListener('keydown', (e) => {
+            if (!questionStage.classList.contains('active')) return;
+            if (e.key === 'ArrowRight' && !nextBtn.disabled) {
+                e.preventDefault();
+                nextQuestion();
+            } else if (e.key === 'ArrowLeft' && !prevBtn.disabled) {
+                e.preventDefault();
+                prevQuestion();
+            }
+        });
+    </script>
+</body>
+</html>
+
+
