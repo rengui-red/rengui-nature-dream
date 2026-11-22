@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="仁归 · 心灵画板 — 用色彩表达情绪。">
+    <meta name="theme-color" content="#5BAA8E">
+    <title>仁归 · 心灵画板</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
+    <style>
+        :root {
+            --rg-primary: #5BAA8E;
+            --rg-primary-light: #7BC8A4;
+            --rg-primary-dark: #3D7A64;
+            --rg-bg: #F5FBF7;
+            --rg-card-bg: #FFFFFF;
+            --rg-text: #2D3E35;
+            --rg-text-soft: #6B7F73;
+            --rg-border: #D4E8DD;
+            --rg-shadow: 0 6px 24px rgba(91, 170, 142, 0.12);
+            --rg-radius: 20px;
+            --rg-radius-sm: 12px;
+            --rg-font: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+            --rg-transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--rg-font);
+            background: var(--rg-bg);
+            color: var(--rg-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-image:
+                radial-gradient(ellipse at 15% 15%, rgba(123, 200, 164, 0.07) 0%, transparent 55%),
+                radial-gradient(ellipse at 85% 70%, rgba(91, 170, 142, 0.05) 0%, transparent 55%);
+        }
+        .rg-nav {
+            width: 100%; max-width: 1200px;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 20px 32px; position: relative; z-index: 10;
+        }
+        .rg-nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--rg-text); font-weight: 700; font-size: 1.4rem; letter-spacing: 0.05em; }
+        .rg-nav-logo svg { width: 40px; height: 40px; }
+        .rg-nav-links { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; }
+        .rg-nav-links a { text-decoration: none; color: var(--rg-text-soft); font-size: 0.88rem; font-weight: 500; transition: var(--rg-transition); }
+        .rg-nav-links a:hover { color: var(--rg-primary); }
+        .rg-nav-links a.rg-active { color: var(--rg-primary); }
+        .rg-main { width: 100%; max-width: 800px; flex: 1; padding: 20px 24px 40px; display: flex; flex-direction: column; gap: 20px; }
+        .rg-page-title { text-align: center; }
+        .rg-page-title h1 { font-size: 1.8rem; font-weight: 800; color: var(--rg-primary-dark); margin-bottom: 4px; }
+        .rg-page-title p { color: var(--rg-text-soft); font-size: 0.9rem; }
+
+        /* 画布容器 */
+        .rg-canvas-wrap {
+            background: var(--rg-card-bg); border-radius: var(--rg-radius);
+            box-shadow: var(--rg-shadow); border: 1px solid var(--rg-border);
+            padding: 16px; display: flex; flex-direction: column; gap: 12px;
+        }
+        .rg-canvas-toolbar {
+            display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+        }
+        .rg-color-btn {
+            width: 32px; height: 32px; border-radius: 50%;
+            border: 3px solid transparent; cursor: pointer; transition: var(--rg-transition);
+            flex-shrink: 0;
+        }
+        .rg-color-btn:hover { transform: scale(1.2); }
+        .rg-color-btn.rg-active { border-color: var(--rg-text); transform: scale(1.2); }
+        .rg-tool-btn {
+            width: 36px; height: 36px; border-radius: 50%;
+            border: 1.5px solid var(--rg-border); background: #fff;
+            cursor: pointer; font-size: 1.2rem; transition: var(--rg-transition);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .rg-tool-btn:hover { border-color: var(--rg-primary-light); transform: scale(1.1); }
+        .rg-tool-btn.rg-active { border-color: var(--rg-primary); background: rgba(123, 200, 164, 0.1); }
+        .rg-brush-size { padding: 6px 12px; border: 1.5px solid var(--rg-border); border-radius: 20px; font-size: 0.85rem; cursor: pointer; font-family: var(--rg-font); }
+        canvas#drawingCanvas {
+            width: 100%; height: 400px;
+            border-radius: var(--rg-radius-sm);
+            border: 1px solid var(--rg-border);
+            background: #fff;
+            cursor: crosshair;
+            touch-action: none;
+        }
+        .rg-canvas-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .rg-btn { padding: 10px 22px; border-radius: 50px; font-size: 0.9rem; font-weight: 600; cursor: pointer; border: none; transition: var(--rg-transition); font-family: var(--rg-font); }
+        .rg-btn-primary { background: var(--rg-primary); color: #fff; box-shadow: 0 4px 14px rgba(91, 170, 142, 0.3); }
+        .rg-btn-primary:hover { background: var(--rg-primary-dark); }
+        .rg-btn-secondary { background: transparent; color: var(--rg-text-soft); border: 2px solid var(--rg-border); }
+        .rg-btn-secondary:hover { border-color: var(--rg-primary-light); color: var(--rg-primary); }
+
+        /* 画作收藏 */
+        .rg-art-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+        .rg-art-item {
+            background: var(--rg-card-bg); border-radius: var(--rg-radius-sm);
+            padding: 10px; box-shadow: 0 2px 10px rgba(91, 170, 142, 0.08);
+            border: 1px solid var(--rg-border); text-align: center;
+        }
+        .rg-art-item img { width: 100%; border-radius: 8px; border: 1px solid #eee; }
+        .rg-art-item .rg-art-date { font-size: 0.75rem; color: var(--rg-text-soft); margin-top: 6px; }
+        .rg-art-item .rg-art-delete { background: none; border: none; cursor: pointer; color: #ccc; font-size: 1rem; }
+        .rg-art-item .rg-art-delete:hover { color: #FF6B6B; }
+        .rg-footer { width: 100%; max-width: 1200px; text-align: center; padding: 20px 32px; color: var(--rg-text-soft); font-size: 0.8rem; border-top: 1px solid var(--rg-border); margin-top: auto; }
+        @media (max-width: 768px) {
+            .rg-nav { padding: 14px 16px; flex-direction: column; gap: 10px; }
+            .rg-main { padding: 12px 12px 24px; }
+            canvas#drawingCanvas { height: 300px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="rg-nav">
+        <a href="index.html" class="rg-nav-logo">
+            <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" fill="#7BC8A4" opacity="0.3"/><path d="M20 5C12 10 8 16 8 24c0 6 5 10 12 10s12-4 12-10c0-8-4-14-12-19z" fill="#5BAA8E"/><path d="M20 30c-4-2-6-6-6-10 0-3 2-5 6-5s6 2 6 5c0 4-2 8-6 10z" fill="#A8D8B9"/><circle cx="20" cy="20" r="3" fill="#fff"/></svg>
+            仁归
+        </a>
+        <div class="rg-nav-links">
+            <a href="index.html">首页</a>
+            <a href="rain-heart.html">🌧️ 雨点心</a>
+            <a href="star-wish.html">⭐ 欣雨点</a>
+            <a href="music.html">🎵 音愈</a>
+            <a href="poetry.html">📝 写诗</a>
+            <a href="drawing.html" class="rg-active">🎨 画画</a>
+            <a href="diary.html">日记</a>
+            <a href="sas-test.html">对话</a>
+        </div>
+    </nav>
+
+    <main class="rg-main">
+        <div class="rg-page-title">
+            <h1>🎨 心灵画板</h1>
+            <p>让色彩替你说出那些无法言说的情绪</p>
+        </div>
+
+        <div class="rg-canvas-wrap">
+            <div class="rg-canvas-toolbar" id="toolbar">
+                <!-- 颜色由JS生成 -->
+            </div>
+            <canvas id="drawingCanvas"></canvas>
+            <div class="rg-canvas-actions">
+                <button class="rg-btn rg-btn-primary" id="saveArtBtn">💾 保存画作</button>
+                <button class="rg-btn rg-btn-secondary" id="clearCanvasBtn">🧹 清空</button>
+                <button class="rg-btn rg-btn-secondary" id="undoBtn">↩️ 撤销</button>
+            </div>
+        </div>
+
+        <!-- 画作收藏 -->
+        <div class="rg-art-gallery" id="artGallery"></div>
+    </main>
+
+    <footer class="rg-footer">
+        <p>🌿 仁归 · 以开放为径，以仁归为心 · <a href="../../markdown.md">开源誓约</a> · MIT License</p>
+
+    <div class="footer" style="margin-top: 15px; color: #888; font-size: 0.75rem; line-height: 1.8;">
+        <p>© 2026 上海易通和维科技有限责任公司 版权所有 · 保留所有权利。</p>
+        <p>
+            <a href="https://beian.miit.gov.cn" target="_blank" style="color: #888;">沪ICP备2026051000号</a> | 
+            <!-- 如果后续有了公安备案，加在这里 -->
+            <!-- <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=xxxx" target="_blank">沪公网安备 xxxx号</a> | -->
+            <a href="privacy.html" style="color: #888;">隐私政策</a> | 
+            <a href="terms.html" style="color: #888;">用户协议</a>
+        </p>
+        <p>统一社会信用代码：91310114MAKMUW813C</p>
+        <p>公司地址：上海市嘉定区曹安公路5616号1420室</p>
+        <p>商务合作：<a href="mailto:contact@yitonghewei.com" style="color: #888;">contact@yitonghewei.com</a> | 技术客服：<a href="mailto:support@yitonghewei.com" style="color: #888;">support@yitonghewei.com</a></p>
+        <p style="margin-top: 10px; font-weight: bold; color: #2E7D5B;">免责声明：本平台为非盈利性心理辅助开源项目，所提供的功能仅供情绪缓解与放松参考，不构成专业医疗或心理诊断建议。如遇严重心理危机，请及时前往正规医疗机构就诊。</p>
+        <p style="margin-top: 5px;">创意创建开发者：南山居士 / 尘间盲克 | 创意创建技术协助：DBJSZ  |  DPJSZ  </p>
+    </div>
+</footer>
+
+    </footer>
+
+    <script src="../js/core/global-config.js"></script>
+    <script src="../js/core/utils.js"></script>
+    <script src="../js/core/storage.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.getElementById('drawingCanvas');
+            const ctx = canvas.getContext('2d');
+            const toolbar = document.getElementById('toolbar');
+            const saveArtBtn = document.getElementById('saveArtBtn');
+            const clearCanvasBtn = document.getElementById('clearCanvasBtn');
+            const undoBtn = document.getElementById('undoBtn');
+            const artGallery = document.getElementById('artGallery');
+            
+            const ART_KEY = RenguiConfig.getKey('art_collection');
+            
+            // 情绪色彩
+            const colors = [
+                { name: '墨黑', hex: '#2D3E35' },
+                { name: '黛蓝', hex: '#4A6B8A' },
+                { name: '青绿', hex: '#5BAA8E' },
+                { name: '嫩绿', hex: '#7BC8A4' },
+                { name: '暖黄', hex: '#FFD93D' },
+                { name: '橙红', hex: '#FF8B5E' },
+                { name: '枫红', hex: '#FF6B6B' },
+                { name: '粉樱', hex: '#FFB6C1' },
+                { name: '淡紫', hex: '#C9B1FF' },
+                { name: '月白', hex: '#F0F4F8' },
+                { name: '暖棕', hex: '#8B6B4A' },
+                { name: '星金', hex: '#D4A853' }
+            ];
+            
+            let currentColor = colors[2].hex;
+            let isDrawing = false;
+            let lastX = 0, lastY = 0;
+            let undoStack = [];
+            
+            // 初始化Canvas
+            function initCanvas() {
+                resizeCanvas();
+                window.addEventListener('resize', resizeCanvas);
+                canvas.addEventListener('mousedown', startDraw);
+                canvas.addEventListener('mousemove', draw);
+                canvas.addEventListener('mouseup', endDraw);
+                canvas.addEventListener('mouseleave', endDraw);
+                canvas.addEventListener('touchstart', startDrawTouch);
+                canvas.addEventListener('touchmove', drawTouch);
+                canvas.addEventListener('touchend', endDraw);
+            }
+            
+            function resizeCanvas() {
+                const rect = canvas.parentElement.getBoundingClientRect();
+                canvas.width = rect.width - 2;
+                canvas.height = 400;
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                renderGallery();
+            }
+            
+            // 渲染颜色按钮
+            function renderToolbar() {
+                toolbar.innerHTML = '';
+                colors.forEach(c => {
+                    const btn = document.createElement('button');
+                    btn.className = 'rg-color-btn';
+                    btn.style.background = c.hex;
+                    btn.title = c.name;
+                    if (c.hex === currentColor) btn.classList.add('rg-active');
+                    btn.addEventListener('click', () => {
+                        currentColor = c.hex;
+                        toolbar.querySelectorAll('.rg-color-btn').forEach(b => b.classList.remove('rg-active'));
+                        btn.classList.add('rg-active');
+                    });
+                    toolbar.appendChild(btn);
+                });
+                
+                // 画笔大小
+                const sizeSelect = document.createElement('select');
+                sizeSelect.className = 'rg-brush-size';
+                sizeSelect.innerHTML = `<option value="3">细笔</option><option value="8" selected>中笔</option><option value="16">粗笔</option>`;
+                sizeSelect.addEventListener('change', () => {
+                    brushSize = parseInt(sizeSelect.value);
+                });
+                toolbar.appendChild(sizeSelect);
+                
+                // 橡皮
+                const eraserBtn = document.createElement('button');
+                eraserBtn.className = 'rg-tool-btn';
+                eraserBtn.textContent = '🧹';
+                eraserBtn.title = '橡皮';
+                eraserBtn.addEventListener('click', () => {
+                    currentColor = '#FFFFFF';
+                    toolbar.querySelectorAll('.rg-color-btn').forEach(b => b.classList.remove('rg-active'));
+                });
+                toolbar.appendChild(eraserBtn);
+            }
+            
+            let brushSize = 8;
+            
+            function getPos(e) {
+                const rect = canvas.getBoundingClientRect();
+                return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+            }
+            function getPosTouch(e) {
+                const rect = canvas.getBoundingClientRect();
+                const touch = e.touches[0];
+                return { x: touch.clientX - rect.left, y: touch.clientY - rect.top };
+            }
+            
+            function startDraw(e) {
+                isDrawing = true;
+                const pos = getPos(e);
+                lastX = pos.x; lastY = pos.y;
+                saveUndo();
+            }
+            function startDrawTouch(e) {
+                e.preventDefault();
+                isDrawing = true;
+                const pos = getPosTouch(e);
+                lastX = pos.x; lastY = pos.y;
+                saveUndo();
+            }
+            function draw(e) {
+                if (!isDrawing) return;
+                const pos = getPos(e);
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.strokeStyle = currentColor;
+                ctx.lineWidth = brushSize;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.stroke();
+                lastX = pos.x; lastY = pos.y;
+            }
+            function drawTouch(e) {
+                if (!isDrawing) return;
+                e.preventDefault();
+                const pos = getPosTouch(e);
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.strokeStyle = currentColor;
+                ctx.lineWidth = brushSize;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.stroke();
+                lastX = pos.x; lastY = pos.y;
+            }
+            function endDraw() { isDrawing = false; }
+            
+            function saveUndo() {
+                if (undoStack.length > 20) undoStack.shift();
+                undoStack.push(canvas.toDataURL());
+            }
+            
+            undoBtn.addEventListener('click', () => {
+                if (undoStack.length > 0) {
+                    const imgData = undoStack.pop();
+                    const img = new Image();
+                    img.onload = () => {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(img, 0, 0);
+                    };
+                    img.src = imgData;
+                }
+            });
+            
+            clearCanvasBtn.addEventListener('click', () => {
+                saveUndo();
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            });
+            
+            // 保存画作
+            saveArtBtn.addEventListener('click', () => {
+                const dataUrl = canvas.toDataURL('image/png');
+                const arts = RenguiStorage.get(ART_KEY) || [];
+                // 检查大小限制
+                if (dataUrl.length > 2 * 1024 * 1024) {
+                    RenguiUtils.showToast('画作太大，请清空后重画');
+                    return;
+                }
+                arts.push({
+                    dataUrl: dataUrl,
+                    timestamp: new Date().toISOString()
+                });
+                RenguiStorage.set(ART_KEY, arts);
+                renderGallery();
+                RenguiUtils.showToast('画作已保存 🎨');
+            });
+            
+            // 渲染画廊
+            function renderGallery() {
+                const arts = RenguiStorage.get(ART_KEY) || [];
+                if (arts.length === 0) {
+                    artGallery.innerHTML = '<p style="text-align:center;color:var(--rg-text-soft);grid-column:1/-1;">还没有画作，开始创作吧～</p>';
+                    return;
+                }
+                arts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                let html = '';
+                arts.slice(0, 12).forEach(art => {
+                    const dateStr = RenguiUtils.formatDateTime(art.timestamp);
+                    html += `<div class="rg-art-item">
+                        <button class="rg-art-delete" data-timestamp="${art.timestamp}">🗑️</button>
+                        <img src="${art.dataUrl}" alt="画作" loading="lazy">
+                        <div class="rg-art-date">${dateStr}</div>
+                    </div>`;
+                });
+                artGallery.innerHTML = html;
+                artGallery.querySelectorAll('.rg-art-delete').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const ts = this.getAttribute('data-timestamp');
+                        deleteArt(ts);
+                    });
+                });
+            }
+            
+            function deleteArt(timestamp) {
+                let arts = RenguiStorage.get(ART_KEY) || [];
+                arts = arts.filter(a => a.timestamp !== timestamp);
+                RenguiStorage.set(ART_KEY, arts);
+                renderGallery();
+                RenguiUtils.showToast('已删除');
+            }
+            
+            renderToolbar();
+            initCanvas();
+            renderGallery();
+        });
+    </script>
+</body>
+</html>
+
+

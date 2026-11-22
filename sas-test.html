@@ -3,419 +3,684 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAS 焦虑自评 | 仁归·自然之梦</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'><text y='32' font-size='30'>📋</text></svg>">
+    <meta name="description" content="仁归 · 心灵对话 — 等你准备好了，我们聊聊。">
+    <meta name="theme-color" content="#5BAA8E">
+    <title>仁归 · 心灵对话</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💬</text></svg>">
     <style>
         :root {
-            --green-50: #f2f8f3;
-            --green-100: #e0efe4;
-            --green-200: #c2dfc9;
-            --green-400: #6fad80;
-            --green-500: #4a8c5c;
-            --green-600: #3d704a;
-            --green-700: #345c3e;
-            --warm-white: #fefdfb;
-            --text-primary: #2d3a2d;
-            --text-secondary: #5a6b5a;
-            --text-muted: #8a9a8a;
-            --shadow-sm: 0 1px 3px rgba(45,58,45,0.06);
-            --shadow-md: 0 4px 16px rgba(45,58,45,0.08);
-            --shadow-lg: 0 8px 32px rgba(45,58,45,0.10);
-            --radius-md: 14px;
-            --radius-lg: 20px;
-            --radius-xl: 28px;
-            --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --rg-primary: #5BAA8E;
+            --rg-primary-light: #7BC8A4;
+            --rg-primary-dark: #3D7A64;
+            --rg-bg: #F5FBF7;
+            --rg-card-bg: #FFFFFF;
+            --rg-text: #2D3E35;
+            --rg-text-soft: #6B7F73;
+            --rg-border: #D4E8DD;
+            --rg-shadow: 0 6px 24px rgba(91, 170, 142, 0.12);
+            --rg-radius: 20px;
+            --rg-radius-sm: 12px;
+            --rg-font: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+            --rg-transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        * { margin:0; padding:0; box-sizing:border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
-            background: linear-gradient(175deg, #eaf5ec 0%, #f5f9f6 20%, #f8faf7 50%, #f0f7f2 80%);
-            background-attachment: fixed;
-            min-height:100vh; color:var(--text-primary);
-            -webkit-font-smoothing:antialiased;
-            display:flex; flex-direction:column;
+            font-family: var(--rg-font);
+            background: var(--rg-bg);
+            color: var(--rg-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-image:
+                radial-gradient(ellipse at 15% 15%, rgba(123, 200, 164, 0.07) 0%, transparent 55%),
+                radial-gradient(ellipse at 85% 70%, rgba(91, 170, 142, 0.05) 0%, transparent 55%);
         }
-        /* 背景光斑 */
-        .bg-orb {
-            position:fixed; border-radius:50%; pointer-events:none; z-index:0; opacity:0.25; filter:blur(70px);
+        .rg-nav {
+            width: 100%; max-width: 1200px;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 20px 32px; position: relative; z-index: 10;
         }
-        .bg-orb--1 {
-            width:260px; height:260px;
-            background:radial-gradient(circle, rgba(139,175,145,0.4) 0%, transparent 70%);
-            top:-6%; left:-4%;
-            animation:orbFloat 22s ease-in-out infinite;
-        }
-        @keyframes orbFloat {
-            0%,100%{transform:translate(0,0) scale(1);}
-            50%{transform:translate(30px,-20px) scale(1.08);}
-        }
-        /* 导航栏 */
-        .nav-bar {
-            position:sticky; top:0; z-index:100;
-            background:rgba(254,253,251,0.85); backdrop-filter:blur(16px);
-            border-bottom:1px solid rgba(180,200,185,0.3); padding:0 20px;
-        }
-        .nav-inner {
-            max-width:1100px; margin:0 auto;
-            display:flex; align-items:center; justify-content:space-between; height:56px;
-        }
-        .nav-brand { text-decoration:none; color:var(--green-700); font-weight:700; font-size:1.2rem; }
-        .nav-links { display:flex; gap:18px; list-style:none; }
-        .nav-links a { text-decoration:none; color:var(--text-secondary); font-size:0.9rem; transition:color 0.2s; }
-        .nav-links a:hover { color:var(--green-500); }
+        .rg-nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--rg-text); font-weight: 700; font-size: 1.4rem; letter-spacing: 0.05em; }
+        .rg-nav-logo svg { width: 40px; height: 40px; }
+        .rg-nav-links { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+        .rg-nav-links a { text-decoration: none; color: var(--rg-text-soft); font-size: 0.9rem; font-weight: 500; transition: var(--rg-transition); position: relative; }
+        .rg-nav-links a:hover { color: var(--rg-primary); }
+        .rg-nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--rg-primary); transition: var(--rg-transition); border-radius: 1px; }
+        .rg-nav-links a:hover::after { width: 100%; }
+        .rg-nav-links a.rg-active { color: var(--rg-primary); }
+        .rg-nav-links a.rg-active::after { width: 100%; }
+        .rg-main { width: 100%; max-width: 700px; flex: 1; padding: 20px 24px 40px; display: flex; flex-direction: column; gap: 16px; }
+        .rg-page-title { text-align: center; margin-bottom: 4px; }
+        .rg-page-title h1 { font-size: 1.7rem; font-weight: 800; color: var(--rg-primary-dark); letter-spacing: 0.06em; margin-bottom: 4px; }
+        .rg-page-title p { color: var(--rg-text-soft); font-size: 0.9rem; }
 
-        /* 主容器 */
-        .main-wrap {
-            flex:1; display:flex; align-items:center; justify-content:center;
-            padding:30px 20px; position:relative; z-index:1;
+        .rg-chat-container {
+            background: var(--rg-card-bg);
+            border-radius: var(--rg-radius);
+            box-shadow: var(--rg-shadow);
+            border: 1px solid var(--rg-border);
+            display: flex;
+            flex-direction: column;
+            height: 62vh;
+            min-height: 400px;
+            max-height: 650px;
+            overflow: hidden;
         }
-        .card {
-            background:rgba(255,255,255,0.85); backdrop-filter:blur(14px);
-            border-radius:var(--radius-xl); padding:36px 30px; width:100%; max-width:560px;
-            box-shadow:var(--shadow-lg); border:1px solid rgba(180,200,185,0.3);
-            text-align:center; transition:all 0.3s;
+        
+        /* 消息区域 */
+        .rg-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--rg-primary-light) transparent;
         }
-        /* 进度条 */
-        .progress-wrap {
-            margin-bottom:20px; display:flex; align-items:center; gap:12px;
+        .rg-chat-messages::-webkit-scrollbar { width: 5px; }
+        .rg-chat-messages::-webkit-scrollbar-thumb { background: var(--rg-primary-light); border-radius: 10px; }
+
+        .rg-msg {
+            max-width: 85%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            font-size: 0.92rem;
+            line-height: 1.7;
+            word-wrap: break-word;
+            animation: rgMsgIn 0.4s ease;
         }
-        .progress-bar {
-            flex:1; height:6px; background:var(--green-100); border-radius:6px; overflow:hidden;
+        @keyframes rgMsgIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .progress-fill {
-            height:100%; background:linear-gradient(90deg, var(--green-400), var(--green-500));
-            border-radius:6px; transition:width 0.4s ease;
+        .rg-msg-ai {
+            align-self: flex-start;
+            background: #F0F7F3;
+            color: var(--rg-text);
+            border-bottom-left-radius: 4px;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
         }
-        .progress-text {
-            font-size:0.85rem; color:var(--text-muted); white-space:nowrap;
+        .rg-msg-ai .rg-avatar {
+            width: 32px; height: 32px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--rg-primary-light), var(--rg-primary));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; color: #fff; flex-shrink: 0;
         }
-        /* 题目区 */
-        .question-stage { display:none; }
-        .question-stage.active { display:block; }
-        .greeting {
-            font-size:1.6rem; color:var(--green-600); margin-bottom:16px; font-weight:600;
+        .rg-msg-user {
+            align-self: flex-end;
+            background: var(--rg-primary);
+            color: #fff;
+            border-bottom-right-radius: 4px;
         }
-        .question-text {
-            font-size:1.2rem; color:var(--text-primary); margin:20px 0 24px; line-height:1.6;
-            min-height:60px; display:flex; align-items:center; justify-content:center;
+        
+        /* 选项按钮组 */
+        .rg-options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-self: flex-end;
+            max-width: 85%;
+            animation: rgMsgIn 0.4s ease;
         }
-        .options-list {
-            display:flex; flex-direction:column; gap:10px; margin-bottom:20px;
+        .rg-option-btn {
+            padding: 10px 20px;
+            border-radius: 16px;
+            border: 1.5px solid var(--rg-border);
+            background: #fff;
+            cursor: pointer;
+            font-size: 0.88rem;
+            font-family: var(--rg-font);
+            color: var(--rg-text);
+            transition: var(--rg-transition);
+            text-align: left;
+            white-space: normal;
+            line-height: 1.4;
         }
-        .option-btn {
-            display:flex; align-items:center; gap:10px;
-            padding:14px 18px; background:var(--warm-white);
-            border:2px solid rgba(180,200,185,0.35); border-radius:var(--radius-md);
-            cursor:pointer; transition:all 0.2s; text-align:left;
-            font-size:0.95rem; color:var(--text-primary);
+        .rg-option-btn:hover {
+            border-color: var(--rg-primary-light);
+            background: rgba(123, 200, 164, 0.08);
+            transform: translateY(-1px);
         }
-        .option-btn:hover {
-            border-color:var(--green-400); background:var(--green-50);
-            transform:translateX(4px);
+        .rg-option-btn:active { transform: scale(0.98); }
+        .rg-option-btn.rg-selected {
+            background: var(--rg-primary);
+            color: #fff;
+            border-color: var(--rg-primary);
+            box-shadow: 0 2px 10px rgba(91, 170, 142, 0.3);
         }
-        .option-btn.selected {
-            border-color:var(--green-500); background:var(--green-100);
-            box-shadow:0 0 0 3px rgba(74,140,92,0.15);
+        .rg-option-btn:disabled { cursor: not-allowed; opacity: 0.6; }
+
+        /* 输入区域 */
+        .rg-input-area {
+            padding: 14px 18px;
+            border-top: 1px solid var(--rg-border);
+            display: flex;
+            gap: 10px;
+            background: rgba(123, 200, 164, 0.03);
         }
-        .option-emoji { font-size:1.3rem; width:30px; text-align:center; }
-        /* 导航按钮 */
-        .nav-btns {
-            display:flex; gap:10px; justify-content:center; margin-top:10px;
+        .rg-input-area input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 2px solid var(--rg-border);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-family: var(--rg-font);
+            outline: none;
+            transition: var(--rg-transition);
+            background: #fff;
+            color: var(--rg-text);
         }
-        .btn {
-            display:inline-flex; align-items:center; gap:6px;
-            padding:12px 24px; font-size:0.95rem; font-weight:600;
-            border-radius:28px; cursor:pointer; transition:all 0.3s; border:none;
-            font-family:inherit;
+        .rg-input-area input:focus {
+            border-color: var(--rg-primary);
+            box-shadow: 0 0 0 3px rgba(91, 170, 142, 0.1);
         }
-        .btn-primary {
-            background:linear-gradient(135deg, var(--green-500), var(--green-600));
-            color:#fff; box-shadow:0 4px 14px rgba(74,140,92,0.3);
+        .rg-input-area button {
+            padding: 10px 20px;
+            border-radius: 50px;
+            background: var(--rg-primary);
+            color: #fff;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: var(--rg-font);
+            transition: var(--rg-transition);
+            white-space: nowrap;
         }
-        .btn-primary:hover { box-shadow:0 6px 22px rgba(74,140,92,0.42); transform:translateY(-2px); }
-        .btn-primary:disabled { opacity:0.5; cursor:not-allowed; transform:none; box-shadow:none; }
-        .btn-outline {
-            background:#fff; color:var(--green-600);
-            border:2px solid var(--green-200); box-shadow:var(--shadow-sm);
+        .rg-input-area button:hover { background: var(--rg-primary-dark); }
+
+        /* 打字指示器 */
+        .rg-typing {
+            align-self: flex-start;
+            background: #F0F7F3;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            padding: 12px 18px;
+            display: flex;
+            gap: 6px;
+            align-items: center;
         }
-        .btn-outline:hover { border-color:var(--green-500); box-shadow:var(--shadow-md); }
-        /* 结果卡片 */
-        .result-box { display:none; }
-        .result-box.active { display:block; }
-        .result-score { font-size:2.2rem; font-weight:700; color:var(--green-600); margin:10px 0; }
-        .result-level { font-size:1.1rem; font-weight:600; margin:6px 0; }
-        .result-suggestion {
-            color:var(--text-secondary); margin:16px 0; line-height:1.7;
-            background:var(--green-50); padding:14px; border-radius:var(--radius-md);
+        .rg-typing-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--rg-primary-light); animation: rgTyping 1.2s infinite; }
+        .rg-typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .rg-typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes rgTyping { 0%, 60%, 100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-8px); opacity: 1; } }
+
+        /* 进度条（测评过程中显示） */
+        .rg-progress-bar {
+            padding: 10px 18px;
+            border-bottom: 1px solid var(--rg-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(123, 200, 164, 0.04);
+            display: none;
         }
-        .back-row { margin-top:20px; }
-        @media (max-width:500px) {
-            .card { padding:24px 16px; }
-            .question-text { font-size:1.05rem; }
-            .option-btn { padding:12px; font-size:0.9rem; }
-            .nav-links { gap:8px; }
+        .rg-progress-track { flex: 1; height: 5px; background: #e8f0ec; border-radius: 3px; overflow: hidden; }
+        .rg-progress-fill { height: 100%; background: linear-gradient(90deg, var(--rg-primary-light), var(--rg-primary)); border-radius: 3px; transition: width 0.5s ease; width: 0%; }
+        .rg-progress-text { font-size: 0.78rem; color: var(--rg-text-soft); white-space: nowrap; font-weight: 600; }
+
+        /* 结果面板 */
+        .rg-result-panel {
+            background: var(--rg-card-bg);
+            border-radius: var(--rg-radius);
+            padding: 28px;
+            box-shadow: var(--rg-shadow);
+            border: 1px solid var(--rg-border);
+            text-align: center;
+            animation: rgMsgIn 0.6s ease;
+        }
+        .rg-result-score { font-size: 2.8rem; font-weight: 800; color: var(--rg-primary); margin: 12px 0; }
+        .rg-result-level { font-size: 1.2rem; font-weight: 700; padding: 8px 24px; border-radius: 30px; display: inline-block; margin-bottom: 16px; }
+        .rg-level-normal { background: #E8F5E9; color: #2E7D32; }
+        .rg-level-mild { background: #FFF8E1; color: #F9A825; }
+        .rg-level-moderate { background: #FFF3E0; color: #EF6C00; }
+        .rg-level-severe { background: #FFEBEE; color: #C62828; }
+        .rg-result-desc { color: var(--rg-text-soft); line-height: 1.8; font-size: 0.92rem; text-align: left; max-width: 560px; margin: 12px auto 0; }
+        .rg-reset-row { display: flex; justify-content: center; margin-top: 8px; }
+        .rg-btn { padding: 10px 24px; border-radius: 50px; font-size: 0.9rem; font-weight: 600; cursor: pointer; border: none; transition: var(--rg-transition); font-family: var(--rg-font); }
+        .rg-btn-secondary { background: transparent; color: var(--rg-text-soft); border: 2px solid var(--rg-border); }
+        .rg-btn-secondary:hover { border-color: var(--rg-primary-light); color: var(--rg-primary); }
+
+        .rg-footer { width: 100%; max-width: 1200px; text-align: center; padding: 20px 32px; color: var(--rg-text-soft); font-size: 0.8rem; border-top: 1px solid var(--rg-border); margin-top: auto; }
+        .rg-footer a { color: var(--rg-primary); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .rg-nav { padding: 14px 16px; flex-direction: column; gap: 10px; }
+            .rg-main { padding: 12px 12px 24px; }
+            .rg-chat-container { height: 65vh; min-height: 360px; }
+            .rg-msg { max-width: 92%; }
+            .rg-options-group { max-width: 92%; }
+            .rg-option-btn { padding: 8px 16px; font-size: 0.82rem; }
         }
     </style>
 </head>
 <body>
-    <div class="bg-orb bg-orb--1"></div>
-    <nav class="nav-bar">
-        <div class="nav-inner">
-            <a href="index.html" class="nav-brand">🌿 仁归 · 自然之梦
-</a>
-            <ul class="nav-links">
-                <li><a href="index.html">首页</a></li>
-                <li><a href="brand-home.html">品牌</a></li>
-                <li><a href="mental-entry.html">心理入口</a></li>
-                <li><a href="diary-index.html">日记</a></li>
-            </ul>
+
+    <nav class="rg-nav">
+        <a href="index.html" class="rg-nav-logo">
+            <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" fill="#7BC8A4" opacity="0.3"/><path d="M20 5C12 10 8 16 8 24c0 6 5 10 12 10s12-4 12-10c0-8-4-14-12-19z" fill="#5BAA8E"/><path d="M20 30c-4-2-6-6-6-10 0-3 2-5 6-5s6 2 6 5c0 4-2 8-6 10z" fill="#A8D8B9"/><circle cx="20" cy="20" r="3" fill="#fff"/></svg>
+            仁归
+        </a>
+        <div class="rg-nav-links">
+            <a href="index.html">首页</a>
+            <a href="rain-heart.html">🌧️ 雨点心</a>
+            <a href="star-wish.html">⭐ 欣雨点</a>
+            <a href="diary.html">📝 日记</a>
+            <a href="sas-test.html" class="rg-active">💬 对话</a>
+            <a href="relax-game.html">🎮 放松</a>
         </div>
     </nav>
 
-    <div class="main-wrap">
-        <div class="card" id="appCard">
-            <!-- 欢迎界面 -->
-            <div class="question-stage active" id="welcomeStage">
-                <div class="greeting">🍃 焦虑自评 · 温柔对话</div>
-                <p style="color:var(--text-secondary); margin-bottom:20px;">
-                    接下来我会陪你一起感受最近一周的情绪状态。<br>没有对错，没有评判，只需选择最贴近你的那个答案。
-                </p>
-                <p style="color:var(--text-muted); font-size:0.9rem;">共20个小问题，大约需要3分钟</p>
-                <button class="btn btn-primary" onclick="startTest()" style="margin-top:16px;">🌸 开始轻柔自评</button>
+    <main class="rg-main">
+        <div class="rg-page-title">
+            <h1>💬 心灵对话</h1>
+            <p>不催促，不评判。等你准备好了，我们就聊。</p>
+        </div>
+
+        <div class="rg-chat-container">
+            <!-- 进度条（仅在测评中显示） -->
+            <div class="rg-progress-bar" id="progressBar">
+                <div class="rg-progress-track"><div class="rg-progress-fill" id="progressFill"></div></div>
+                <span class="rg-progress-text" id="progressText">0/20</span>
             </div>
 
-            <!-- 答题界面 -->
-            <div class="question-stage" id="questionStage">
-                <div class="progress-wrap">
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill" style="width:0%;"></div>
-                    </div>
-                    <span class="progress-text" id="progressLabel">1/20</span>
-                </div>
-                <div class="question-text" id="questionDisplay"></div>
-                <div class="options-list" id="optionsContainer"></div>
-                <div class="nav-btns">
-                    <button class="btn btn-outline" id="prevBtn" disabled onclick="prevQuestion()">← 上一题</button>
-                    <button class="btn btn-primary" id="nextBtn" disabled onclick="nextQuestion()">下一题 →</button>
-                </div>
-                <p style="color:var(--text-muted); font-size:0.8rem; margin-top:10px;">点击选项即可选中，再点“下一题”继续</p>
-            </div>
+            <!-- 消息区域 -->
+            <div class="rg-chat-messages" id="chatMessages"></div>
 
-            <!-- 结果界面 -->
-            <div class="result-box" id="resultStage">
-                <div class="greeting">🌿 测评完成</div>
-                <p style="color:var(--text-secondary);">你的 SAS 标准分</p>
-                <div class="result-score" id="stdScore">--</div>
-                <div class="result-level" id="levelText"></div>
-                <div class="result-suggestion" id="suggestionText"></div>
-                <button class="btn btn-primary" onclick="resetTest()">🔄 重新测评</button>
-                <div class="back-row">
-                    <a href="mental-entry.html" class="btn-outline" style="display:inline-flex; align-items:center; gap:6px; padding:10px 20px; border-radius:28px; text-decoration:none;">← 返回心理入口</a>
-                </div>
+            <!-- 输入区域 -->
+            <div class="rg-input-area">
+                <input type="text" id="chatInput" placeholder="说点什么…" autocomplete="off">
+                <button id="sendBtn">发送</button>
             </div>
         </div>
+
+        <!-- 结果面板 -->
+        <div id="resultPanel" style="display:none;"></div>
+        <div class="rg-reset-row" id="resetRow" style="display:none;">
+            <button class="rg-btn rg-btn-secondary" id="resetBtn">🔄 再聊一次</button>
+        </div>
+    </main>
+
+    <footer class="rg-footer">
+        <p>🌿 仁归 · 以开放为径，以仁归为心 · <a href="../../markdown.md">开源誓约</a> · MIT License</p>
+
+    <div class="footer" style="margin-top: 15px; color: #888; font-size: 0.75rem; line-height: 1.8;">
+        <p>© 2026 上海易通和维科技有限责任公司 版权所有 · 保留所有权利。</p>
+        <p>
+            <a href="https://beian.miit.gov.cn" target="_blank" style="color: #888;">沪ICP备2026051000号</a> | 
+            <!-- 如果后续有了公安备案，加在这里 -->
+            <!-- <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=xxxx" target="_blank">沪公网安备 xxxx号</a> | -->
+            <a href="privacy.html" style="color: #888;">隐私政策</a> | 
+            <a href="terms.html" style="color: #888;">用户协议</a>
+        </p>
+        <p>统一社会信用代码：91310114MAKMUW813C</p>
+        <p>公司地址：上海市嘉定区曹安公路5616号1420室</p>
+        <p>商务合作：<a href="mailto:contact@yitonghewei.com" style="color: #888;">contact@yitonghewei.com</a> | 技术客服：<a href="mailto:support@yitonghewei.com" style="color: #888;">support@yitonghewei.com</a></p>
+        <p style="margin-top: 10px; font-weight: bold; color: #2E7D5B;">免责声明：本平台为非盈利性心理辅助开源项目，所提供的功能仅供情绪缓解与放松参考，不构成专业医疗或心理诊断建议。如遇严重心理危机，请及时前往正规医疗机构就诊。</p>
+        <p style="margin-top: 5px;">创意创建开发者：南山居士 / 尘间盲克 | 创意创建技术协助：DBJSZ  |  DPJSZ  </p>
     </div>
+</footer>
 
+    <script src="../js/core/global-config.js"></script>
+    <script src="../js/core/utils.js"></script>
+    <script src="../js/core/storage.js"></script>
+    <script src="../js/core/mental-scale.js"></script>
+    <script src="../js/core/ai-core.js"></script>
     <script>
-        // SAS 20题
-        const questions = [
-            "我觉得比平常容易紧张和着急",
-            "我无缘无故地感到害怕",
-            "我容易心里烦乱或觉得惊恐",
-            "我觉得我可能将要发疯",
-            "我觉得一切都很好，也不会发生什么不幸",
-            "我手脚发抖打颤",
-            "我因为头痛、颈痛和背痛而苦恼",
-            "我感觉容易衰弱和疲乏",
-            "我觉得心平气和，并且容易安静坐着",
-            "我觉得心跳得很快",
-            "我因为一阵阵头晕而苦恼",
-            "我有晕倒发作，或觉得要晕倒似的",
-            "我吸气呼气都感到很容易",
-            "我的手脚麻木和刺痛",
-            "我因为胃痛和消化不良而苦恼",
-            "我常常要小便",
-            "我的手脚常常是干燥温暖的",
-            "我脸红发热",
-            "我容易入睡并且一夜睡得很好",
-            "我做恶梦"
-        ];
-        // 反向计分题索引 (题目编号-1)
-        const reverseIndexes = new Set([4,8,12,16,18]);
-        // 选项
-        const options = [
-            { value:1, emoji:'😌', text:'没有或很少时间' },
-            { value:2, emoji:'🤔', text:'小部分时间' },
-            { value:3, emoji:'😟', text:'相当多时间' },
-            { value:4, emoji:'😣', text:'绝大部分或全部时间' }
-        ];
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatMessages = document.getElementById('chatMessages');
+            const chatInput = document.getElementById('chatInput');
+            const sendBtn = document.getElementById('sendBtn');
+            const progressBar = document.getElementById('progressBar');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const resultPanel = document.getElementById('resultPanel');
+            const resetRow = document.getElementById('resetRow');
+            const resetBtn = document.getElementById('resetBtn');
 
-        let currentIndex = 0;
-        let answers = new Array(questions.length).fill(null); // 存储原始分值(1-4)
+            const SAS_QUESTIONS = RenguiMentalScale.SAS_QUESTIONS;
+            const SCORE_KEY = RenguiConfig.getKey(RenguiConfig.STORAGE_KEYS.SAS_HISTORY);
 
-        const welcomeStage = document.getElementById('welcomeStage');
-        const questionStage = document.getElementById('questionStage');
-        const resultStage = document.getElementById('resultStage');
-        const questionDisplay = document.getElementById('questionDisplay');
-        const optionsContainer = document.getElementById('optionsContainer');
-        const progressFill = document.getElementById('progressFill');
-        const progressLabel = document.getElementById('progressLabel');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
+            // 状态
+            let mode = 'idle'; // idle | chatting | testing | done
+            let currentQuestionIndex = 0;
+            let answers = {};
 
-        function showStage(stage) {
-            welcomeStage.classList.remove('active');
-            questionStage.classList.remove('active');
-            resultStage.classList.remove('active');
-            stage.classList.add('active');
-        }
+            // 开场消息
+            const welcomeMessages = [
+                '你好呀，我是仁归。🌿',
+                '这里没有测试，没有分数，只有一个愿意听你说话的朋友。',
+                '如果你最近总觉得心里有点什么，想找人聊聊，我在这里。',
+                '你可以问我任何问题，也可以只是坐坐。'
+            ];
 
-        function startTest() {
-            currentIndex = 0;
-            answers = new Array(questions.length).fill(null);
-            showStage(questionStage);
-            renderQuestion();
-        }
+            // 用户可能问的问题及AI回应
+            const qaMap = {
+                '是什么': '这是一次关于「最近一周感受」的温柔对话。有20个小话题，每个都很简单。聊完之后，我会给你一个小小的反馈，帮你更好地理解自己此刻的状态。不是什么考试，放心。',
+                '干什么': '我们可以聊聊你最近一周的感受。有20个小话题，你只需选最贴近的选项。聊完我会给你一个温柔的反馈，帮你更好地理解自己。',
+                '怎么聊': '很简单。我会问你一个小问题，你从几个选项里选最贴近的。然后我们继续下一个。全程大概3-5分钟。随时可以停下来。',
+                '测什么': '主要想了解你最近的焦虑状态。不是什么诊断，只是一个参考，帮你更了解自己。',
+                '有用吗': '如果你愿意认真回答，它可以帮助你看到自己可能忽略的情绪信号。当然，最有用的永远是「你愿意开始关注自己」这件事本身。',
+                '害怕': '没关系，害怕是正常的。我们慢慢来，你想聊就聊，不想聊就停。我都在。',
+                '不想': '好的，完全没问题。我们就不聊那个。你可以随意说点别的，或者去其他页面逛逛。🌿',
+                '焦虑': '焦虑其实是我们身体的一种信号，它在提醒我们可能需要停下来看看自己。你最近是有什么让你不安的事情吗？',
+                '累': '累的时候，最需要的就是一个不催促你的人。我在这里，你可以慢慢说，也可以什么都不说。',
+                '你好': '你好呀。🌿 今天过得怎么样？'
+            };
 
-        function renderQuestion() {
-            const q = questions[currentIndex];
-            questionDisplay.textContent = `${currentIndex+1}. ${q}`;
-            // 渲染选项
-            optionsContainer.innerHTML = '';
-            options.forEach((opt, idx) => {
-                const btn = document.createElement('div');
-                btn.className = 'option-btn';
-                if (answers[currentIndex] === opt.value) {
-                    btn.classList.add('selected');
-                }
-                btn.innerHTML = `<span class="option-emoji">${opt.emoji}</span> ${opt.text}`;
-                btn.addEventListener('click', () => selectOption(opt.value, btn));
-                optionsContainer.appendChild(btn);
-            });
+            // 初始化
+            function initChat() {
+                chatMessages.innerHTML = '';
+                mode = 'idle';
+                currentQuestionIndex = 0;
+                answers = {};
+                progressBar.style.display = 'none';
+                resultPanel.style.display = 'none';
+                resetRow.style.display = 'none';
+                chatInput.disabled = false;
+                chatInput.placeholder = '说点什么…';
 
-            // 更新进度条
-            const progress = ((currentIndex) / questions.length) * 100;
-            progressFill.style.width = progress + '%';
-            progressLabel.textContent = `${currentIndex+1}/${questions.length}`;
-
-            // 按钮状态
-            prevBtn.disabled = (currentIndex === 0);
-            const answered = answers[currentIndex] !== null;
-            nextBtn.disabled = !answered;
-            if (currentIndex === questions.length - 1 && answered) {
-                nextBtn.textContent = '✨ 完成测评';
-            } else {
-                nextBtn.textContent = '下一题 →';
-            }
-        }
-
-        function selectOption(value, element) {
-            // 移除其他选中样式
-            optionsContainer.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
-            element.classList.add('selected');
-            answers[currentIndex] = value;
-            nextBtn.disabled = false;
-            if (currentIndex === questions.length - 1) {
-                nextBtn.textContent = '✨ 完成测评';
-            }
-        }
-
-        function nextQuestion() {
-            if (answers[currentIndex] === null) return;
-            if (currentIndex < questions.length - 1) {
-                currentIndex++;
-                renderQuestion();
-            } else {
-                // 完成测评
-                showResult();
-            }
-        }
-
-        function prevQuestion() {
-            if (currentIndex > 0) {
-                currentIndex--;
-                renderQuestion();
-            }
-        }
-
-        function calculateScores() {
-            let rawScore = 0;
-            answers.forEach((ans, idx) => {
-                if (ans === null) return;
-                let score = ans;
-                if (reverseIndexes.has(idx)) {
-                    score = 5 - ans; // 反向计分
-                }
-                rawScore += score;
-            });
-            const standardScore = Math.round(rawScore * 1.25);
-            let level = '', suggestion = '';
-            if (standardScore < 50) {
-                level = '🌱 无焦虑症状';
-                suggestion = '你目前的情绪状态较为平稳，像春天的微风。继续保持这份宁静，好好照顾自己。';
-            } else if (standardScore < 60) {
-                level = '🍂 轻度焦虑';
-                suggestion = '你可能正经历一些轻微的不安，这是心灵在提醒你需要休息。试着做几个深呼吸，或者去散散步，和信任的人聊聊天。';
-            } else if (standardScore < 70) {
-                level = '🌧️ 中度焦虑';
-                suggestion = '你的焦虑感有些明显了，它可能影响了你的日常生活。不必独自承受，试试正念冥想、规律运动，或者预约一次心理咨询，都是温柔的出路。';
-            } else {
-                level = '⛈️ 重度焦虑';
-                suggestion = '我能感受到你心里正在经历一场风暴。请记住，寻求专业帮助是勇敢的表现，而不是软弱。联系心理医生或拨打心理援助热线，让温暖的手拉你一把。';
-            }
-            return { rawScore, standardScore, level, suggestion };
-        }
-
-        function showResult() {
-            const result = calculateScores();
-            document.getElementById('stdScore').textContent = result.standardScore;
-            document.getElementById('levelText').textContent = result.level;
-            document.getElementById('suggestionText').textContent = result.suggestion;
-            showStage(resultStage);
-            // 尝试保存到后端
-            saveAssessment(result);
-        }
-
-        async function saveAssessment(result) {
-            try {
-                const answerData = answers.map((val, idx) => ({
-                    question: idx+1,
-                    value: val
-                }));
-                await fetch('/api/assessment', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        test_type: 'SAS',
-                        total_score: result.standardScore,
-                        result_level: result.level,
-                        answers: answerData
-                    })
+                welcomeMessages.forEach((msg, i) => {
+                    setTimeout(() => addAiMessage(msg), i * 800);
                 });
-            } catch (e) {
-                console.log('离线模式：测评结果仅本地显示');
+                setTimeout(() => {
+                    addSuggestionButtons([
+                        { text: '我们可以聊聊吗？', action: 'start_test' },
+                        { text: '这是什么？', action: 'ask_what' },
+                        { text: '我有点害怕', action: 'ask_fear' }
+                    ]);
+                }, welcomeMessages.length * 800 + 500);
             }
-        }
 
-        function resetTest() {
-            answers = new Array(questions.length).fill(null);
-            currentIndex = 0;
-            showStage(welcomeStage);
-        }
-
-        // 键盘快捷键：左右箭头切换题目
-        document.addEventListener('keydown', (e) => {
-            if (!questionStage.classList.contains('active')) return;
-            if (e.key === 'ArrowRight' && !nextBtn.disabled) {
-                e.preventDefault();
-                nextQuestion();
-            } else if (e.key === 'ArrowLeft' && !prevBtn.disabled) {
-                e.preventDefault();
-                prevQuestion();
+            // 添加AI消息
+            function addAiMessage(text) {
+                const div = document.createElement('div');
+                div.className = 'rg-msg rg-msg-ai';
+                div.innerHTML = `<div class="rg-avatar">🌿</div><span>${RenguiUtils.escapeHtml(text)}</span>`;
+                chatMessages.appendChild(div);
+                scrollToBottom();
+                return div;
             }
+
+            // 添加用户消息
+            function addUserMessage(text) {
+                const div = document.createElement('div');
+                div.className = 'rg-msg rg-msg-user';
+                div.textContent = text;
+                chatMessages.appendChild(div);
+                scrollToBottom();
+                return div;
+            }
+
+            // 添加建议按钮
+            function addSuggestionButtons(suggestions) {
+                const group = document.createElement('div');
+                group.className = 'rg-options-group';
+                suggestions.forEach(s => {
+                    const btn = document.createElement('button');
+                    btn.className = 'rg-option-btn';
+                    btn.textContent = s.text;
+                    btn.addEventListener('click', () => handleSuggestion(s.action, s.text));
+                    group.appendChild(btn);
+                });
+                chatMessages.appendChild(group);
+                scrollToBottom();
+            }
+
+            // 添加打字指示器
+            function addTyping() {
+                const div = document.createElement('div');
+                div.className = 'rg-typing';
+                div.id = 'typingIndicator';
+                div.innerHTML = `<span class="rg-typing-dot"></span><span class="rg-typing-dot"></span><span class="rg-typing-dot"></span>`;
+                chatMessages.appendChild(div);
+                scrollToBottom();
+            }
+            function removeTyping() {
+                const t = document.getElementById('typingIndicator');
+                if (t) t.remove();
+            }
+            function scrollToBottom() {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            // 处理建议按钮
+            function handleSuggestion(action, text) {
+                addUserMessage(text);
+                const typing = addTyping();
+                setTimeout(() => {
+                    removeTyping();
+                    if (action === 'start_test') {
+                        beginTest();
+                    } else if (action === 'ask_what') {
+                        addAiMessage(qaMap['是什么']);
+                        setTimeout(() => addSuggestionButtons([
+                            { text: '好，我们聊聊吧', action: 'start_test' },
+                            { text: '我再想想', action: 'wait' }
+                        ]), 800);
+                    } else if (action === 'ask_fear') {
+                        addAiMessage(qaMap['害怕']);
+                        setTimeout(() => addSuggestionButtons([
+                            { text: '那试试看吧', action: 'start_test' },
+                            { text: '先算了', action: 'wait' }
+                        ]), 800);
+                    } else if (action === 'wait') {
+                        addAiMessage('好的，我在这里。你想说话的时候，我都在。🌿');
+                    }
+                }, 600 + Math.random() * 400);
+            }
+
+            // 处理用户自由输入
+            function handleUserInput(text) {
+                addUserMessage(text);
+                const typing = addTyping();
+                setTimeout(() => {
+                    removeTyping();
+
+                    if (mode === 'testing') {
+                        // 测评中用户说了额外的话
+                        addAiMessage('嗯，我听到了。我们先继续刚才的话题，好吗？');
+                        setTimeout(() => askQuestion(currentQuestionIndex), 800);
+                        return;
+                    }
+
+                    if (mode === 'done') {
+                        addAiMessage('我们已经聊过一轮了。如果你想再聊聊，点击下面的按钮。🌿');
+                        return;
+                    }
+
+                    // idle 或 chatting 状态
+                    const lower = text.toLowerCase();
+                    let matched = false;
+                    for (const [key, response] of Object.entries(qaMap)) {
+                        if (lower.includes(key)) {
+                            addAiMessage(response);
+                            matched = true;
+                            break;
+                        }
+                    }
+
+                    if (!matched) {
+                        // 判断是否有开始意愿
+                        if (lower.includes('聊') || lower.includes('开始') || lower.includes('好') || lower.includes('试试') || lower.includes('可以')) {
+                            beginTest();
+                        } else {
+                            addAiMessage('我在听。你可以问我关于这里的事，或者直接说「聊聊吧」，我们慢慢来。🌿');
+                            setTimeout(() => addSuggestionButtons([
+                                { text: '聊聊吧', action: 'start_test' },
+                                { text: '这是什么？', action: 'ask_what' }
+                            ]), 600);
+                        }
+                    } else {
+                        // 如果用户问的是"是什么"类，追加建议
+                        if (lower.includes('是什么') || lower.includes('干什么')) {
+                            setTimeout(() => addSuggestionButtons([
+                                { text: '好，我们聊聊吧', action: 'start_test' },
+                                { text: '我再想想', action: 'wait' }
+                            ]), 600);
+                        }
+                    }
+                }, 500 + Math.random() * 500);
+            }
+
+            // 开始测评
+            function beginTest() {
+                mode = 'testing';
+                progressBar.style.display = 'flex';
+                progressFill.style.width = '0%';
+                progressText.textContent = '0/' + SAS_QUESTIONS.length;
+                addAiMessage('好，我们开始。不用紧张，凭直觉选最贴近的就好。随时可以停下来。');
+                setTimeout(() => askQuestion(0), 1200);
+            }
+
+            // 提问
+            function askQuestion(index) {
+                if (mode !== 'testing') return;
+                if (index >= SAS_QUESTIONS.length) {
+                    finishTest();
+                    return;
+                }
+                currentQuestionIndex = index;
+                const q = SAS_QUESTIONS[index];
+
+                const typing = addTyping();
+                setTimeout(() => {
+                    removeTyping();
+                    addAiMessage(q.text);
+                    const group = document.createElement('div');
+                    group.className = 'rg-options-group';
+                    q.options.forEach(opt => {
+                        const btn = document.createElement('button');
+                        btn.className = 'rg-option-btn';
+                        btn.textContent = opt.label;
+                        btn.setAttribute('data-score', opt.score);
+                        btn.addEventListener('click', () => handleAnswer(btn, opt.label, opt.score));
+                        group.appendChild(btn);
+                    });
+                    chatMessages.appendChild(group);
+                    scrollToBottom();
+                }, 700 + Math.random() * 500);
+            }
+
+            // 处理回答
+            function handleAnswer(btn, label, score) {
+                // 禁用所有选项
+                const siblings = btn.parentElement.querySelectorAll('.rg-option-btn');
+                siblings.forEach(b => { b.disabled = true; });
+                btn.classList.add('rg-selected');
+                btn.style.opacity = '1';
+                btn.style.cursor = 'default';
+
+                answers[currentQuestionIndex + 1] = score;
+                addUserMessage(label);
+                updateProgress();
+
+                const typing = addTyping();
+                setTimeout(() => {
+                    removeTyping();
+                    if (currentQuestionIndex + 1 >= SAS_QUESTIONS.length) {
+                        finishTest();
+                    } else {
+                        const transitions = [
+                            '嗯，我听到了。', '谢谢你愿意分享。', '好的，我们继续。',
+                            '做得很好。', '我在这里听着。', '没关系的，慢慢来。',
+                            '好的。', '收到。'
+                        ];
+                        addAiMessage(RenguiUtils.randomPick(transitions));
+                        setTimeout(() => askQuestion(currentQuestionIndex + 1), 900);
+                    }
+                }, 600 + Math.random() * 400);
+            }
+
+            // 更新进度
+            function updateProgress() {
+                const answered = Object.keys(answers).filter(k => answers[k] !== null).length;
+                const pct = (answered / SAS_QUESTIONS.length) * 100;
+                progressFill.style.width = pct + '%';
+                progressText.textContent = answered + '/' + SAS_QUESTIONS.length;
+            }
+
+            // 结束测评
+            function finishTest() {
+                mode = 'done';
+                progressBar.style.display = 'none';
+                addAiMessage('我们的对话结束了。谢谢你愿意和我聊这些。💚');
+                setTimeout(showResult, 1200);
+            }
+
+            // 显示结果
+            function showResult() {
+                const { rawTotal, standardScore } = RenguiMentalScale.calculateSAS(answers);
+                const result = RenguiMentalScale.getResultLevel(standardScore);
+
+                const history = RenguiStorage.get(SCORE_KEY) || [];
+                history.push({
+                    score: standardScore,
+                    rawTotal: rawTotal,
+                    level: result.level,
+                    timestamp: new Date().toISOString()
+                });
+                RenguiStorage.set(SCORE_KEY, history);
+
+                resultPanel.style.display = 'block';
+                resultPanel.innerHTML = `
+                    <div class="rg-result-panel">
+                        <h3 style="color:var(--rg-primary-dark);margin-bottom:8px;">💬 对话小结</h3>
+                        <div class="rg-result-score">${standardScore} <span style="font-size:1rem;font-weight:500;">分</span></div>
+                        <span class="rg-result-level ${result.className}">${result.level}</span>
+                        <div class="rg-result-desc">
+                            <p style="margin-bottom:8px;"><strong>📊 标准分：</strong>${standardScore} 分（满分100分）</p>
+                            <p>${result.desc}</p>
+                            <p style="margin-top:16px;font-size:0.85rem;color:#aaa;text-align:center;">
+                                💚 感谢你愿意花时间了解自己。<br>本结果仅供参考，不能替代专业诊断。<br>
+                                如需进一步帮助，请咨询专业心理医生。
+                            </p>
+                        </div>
+                    </div>
+                `;
+                resetRow.style.display = 'flex';
+                chatInput.disabled = true;
+                chatInput.placeholder = '对话已结束';
+                resultPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            // 重新开始
+            resetBtn.addEventListener('click', () => {
+                resultPanel.style.display = 'none';
+                resetRow.style.display = 'none';
+                chatInput.disabled = false;
+                chatInput.placeholder = '说点什么…';
+                initChat();
+                RenguiUtils.showToast('重新开始对话 🌿');
+            });
+
+            // 发送按钮
+            sendBtn.addEventListener('click', () => {
+                const text = chatInput.value.trim();
+                if (!text) return;
+                chatInput.value = '';
+                handleUserInput(text);
+            });
+            chatInput.addEventListener('keydown', e => {
+                if (e.key === 'Enter') {
+                    const text = chatInput.value.trim();
+                    if (!text) return;
+                    chatInput.value = '';
+                    handleUserInput(text);
+                }
+            });
+
+            // 启动
+            initChat();
         });
     </script>
+    <script src="../js/core/crisis-intervention.js"></script>
 </body>
 </html>
+
 
 
